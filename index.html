@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="ka">
 <head>
@@ -24,10 +24,6 @@
 >
 
 <style>
-
-/* =========================================================
-   RESET
-========================================================= */
 
 *,*::before,*::after{
     box-sizing:border-box;
@@ -74,6 +70,7 @@ button{
     user-select:none;
     -webkit-user-select:none;
     background:none;
+    touch-action:manipulation;
 }
 
 img{
@@ -94,10 +91,6 @@ img{
     --white:#FFFDF8;
     --ease:cubic-bezier(.22,.8,.22,1);
 }
-
-/* =========================================================
-   APP
-========================================================= */
 
 .app{
     position:relative;
@@ -144,7 +137,7 @@ img{
     pointer-events:auto;
 
     transition:
-        opacity .65s var(--ease),
+        opacity .55s var(--ease),
         visibility 0s linear 0s;
 }
 
@@ -406,7 +399,6 @@ img{
 
 .character .ear.left{
     left:22%;
-
     transform:
         rotate(-26deg)
         skew(-6deg);
@@ -417,7 +409,6 @@ img{
 
 .character .ear.right{
     right:22%;
-
     transform:
         rotate(26deg)
         skew(6deg);
@@ -532,7 +523,6 @@ img{
 .thought.t1{
     width:11px;
     height:11px;
-
     right:16%;
     top:8%;
 }
@@ -540,7 +530,6 @@ img{
 .thought.t2{
     width:17px;
     height:17px;
-
     right:7%;
     top:0;
 }
@@ -548,7 +537,6 @@ img{
 .thought.t3{
     width:24px;
     height:24px;
-
     right:-2%;
     top:-10%;
 }
@@ -580,17 +568,9 @@ img{
 }
 
 @keyframes textBump{
-    0%{
-        transform:scale(1);
-    }
-
-    45%{
-        transform:scale(1.06);
-    }
-
-    100%{
-        transform:scale(1);
-    }
+    0%{transform:scale(1);}
+    45%{transform:scale(1.06);}
+    100%{transform:scale(1);}
 }
 
 .heart{
@@ -602,27 +582,11 @@ img{
 }
 
 @keyframes heartBeat{
-
-    0%,100%{
-        transform:scale(1);
-    }
-
-    8%{
-        transform:scale(1.16);
-    }
-
-    16%{
-        transform:scale(1);
-    }
-
-    24%{
-        transform:scale(1.1);
-    }
-
-    32%{
-        transform:scale(1);
-    }
-
+    0%,100%{transform:scale(1);}
+    8%{transform:scale(1.16);}
+    16%{transform:scale(1);}
+    24%{transform:scale(1.1);}
+    32%{transform:scale(1);}
 }
 
 .action-row{
@@ -784,15 +748,8 @@ img{
 }
 
 @keyframes gentleFloat{
-
-    0%,100%{
-        transform:translateY(0);
-    }
-
-    50%{
-        transform:translateY(-5px);
-    }
-
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-5px);}
 }
 
 .kiss-character .ear{
@@ -1046,6 +1003,7 @@ img{
 
 .icon-giftbox .bow-loop.right{
     right:8px;
+
     transform:
         rotate(18deg)
         scaleX(-1);
@@ -1144,29 +1102,12 @@ img{
         box-shadow .4s ease;
 }
 
-.memory-photo:nth-child(1){
-    --rot:-3deg;
-}
-
-.memory-photo:nth-child(2){
-    --rot:2deg;
-}
-
-.memory-photo:nth-child(3){
-    --rot:-1.5deg;
-}
-
-.memory-photo:nth-child(4){
-    --rot:2.5deg;
-}
-
-.memory-photo:nth-child(5){
-    --rot:-2deg;
-}
-
-.memory-photo:nth-child(6){
-    --rot:1.5deg;
-}
+.memory-photo:nth-child(1){--rot:-3deg;}
+.memory-photo:nth-child(2){--rot:2deg;}
+.memory-photo:nth-child(3){--rot:-1.5deg;}
+.memory-photo:nth-child(4){--rot:2.5deg;}
+.memory-photo:nth-child(5){--rot:-2deg;}
+.memory-photo:nth-child(6){--rot:1.5deg;}
 
 .memory-photo:hover{
     transform:
@@ -1521,7 +1462,6 @@ img{
 
 .music-back{
     align-self:flex-start;
-
     margin-top:18px;
 }
 
@@ -1726,7 +1666,6 @@ img{
             scale(1)
             rotate(var(--r));
     }
-
 }
 
 /* =========================================================
@@ -1808,7 +1747,6 @@ img{
     .track-card{
         min-height:230px;
     }
-
 }
 
 @media(max-width:430px){
@@ -1829,7 +1767,6 @@ img{
     .keepsakes{
         gap:9px;
     }
-
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -1840,7 +1777,6 @@ img{
         transition-duration:.01ms !important;
         scroll-behavior:auto !important;
     }
-
 }
 
 </style>
@@ -1881,10 +1817,6 @@ img{
 
 
 <div class="app">
-
-<!-- =======================================================
-     HEADER
-======================================================= -->
 
 <header class="header">
 
@@ -1937,7 +1869,6 @@ img{
 
         </div>
 
-
         <div
             id="questionText"
             class="question-text"
@@ -1945,7 +1876,6 @@ img{
             იქნები ჩემი გოგო?
             <span class="heart">♥</span>
         </div>
-
 
         <div class="action-row">
 
@@ -1988,7 +1918,6 @@ img{
             <span class="heart">♥</span>
         </div>
 
-
         <div class="kiss-character">
 
             <div class="ear left"></div>
@@ -2009,11 +1938,7 @@ img{
 
         </div>
 
-
         <div class="keepsakes">
-
-
-            <!-- MEMORY -->
 
             <button
                 class="gift"
@@ -2049,8 +1974,6 @@ img{
             </button>
 
 
-            <!-- MUSIC -->
-
             <button
                 class="gift"
                 id="gift2"
@@ -2084,8 +2007,6 @@ img{
 
             </button>
 
-
-            <!-- LETTER -->
 
             <button
                 class="gift"
@@ -2142,12 +2063,9 @@ img{
             დამახსოვრებული წამები
         </div>
 
-
         <div class="memory-board">
 
-
             <div class="memory-photo">
-
                 <img
                     src="memory1.jpg"
                     alt=""
@@ -2156,19 +2074,15 @@ img{
                         this.nextElementSibling.style.display='flex';
                     "
                 >
-
                 <div
                     class="memory-placeholder"
                     style="display:none"
                 >
                     ♡
                 </div>
-
             </div>
 
-
             <div class="memory-photo">
-
                 <img
                     src="memory2.jpg"
                     alt=""
@@ -2177,19 +2091,15 @@ img{
                         this.nextElementSibling.style.display='flex';
                     "
                 >
-
                 <div
                     class="memory-placeholder"
                     style="display:none"
                 >
                     ♡
                 </div>
-
             </div>
 
-
             <div class="memory-photo">
-
                 <img
                     src="memory3.jpg"
                     alt=""
@@ -2198,19 +2108,15 @@ img{
                         this.nextElementSibling.style.display='flex';
                     "
                 >
-
                 <div
                     class="memory-placeholder"
                     style="display:none"
                 >
                     ♡
                 </div>
-
             </div>
 
-
             <div class="memory-photo">
-
                 <img
                     src="memory4.jpg"
                     alt=""
@@ -2219,19 +2125,15 @@ img{
                         this.nextElementSibling.style.display='flex';
                     "
                 >
-
                 <div
                     class="memory-placeholder"
                     style="display:none"
                 >
                     ♡
                 </div>
-
             </div>
 
-
             <div class="memory-photo">
-
                 <img
                     src="memory5.jpg"
                     alt=""
@@ -2240,19 +2142,15 @@ img{
                         this.nextElementSibling.style.display='flex';
                     "
                 >
-
                 <div
                     class="memory-placeholder"
                     style="display:none"
                 >
                     ♡
                 </div>
-
             </div>
 
-
             <div class="memory-photo">
-
                 <img
                     src="memory6.jpg"
                     alt=""
@@ -2261,18 +2159,15 @@ img{
                         this.nextElementSibling.style.display='flex';
                     "
                 >
-
                 <div
                     class="memory-placeholder"
                     style="display:none"
                 >
                     ♡
                 </div>
-
             </div>
 
         </div>
-
 
         <button
             id="memoryBack"
@@ -2298,7 +2193,6 @@ img{
 
     <div class="music-wrap">
 
-
         <div class="vinyl-card">
 
             <div class="vinyl">
@@ -2313,7 +2207,6 @@ img{
 
         </div>
 
-
         <div class="track-card">
 
             <div class="track-subtitle">
@@ -2327,7 +2220,6 @@ img{
             <div class="track-artist">
                 Adele
             </div>
-
 
             <div class="player">
 
@@ -2357,7 +2249,6 @@ img{
                 </div>
 
             </div>
-
 
             <button
                 id="musicBack"
@@ -2395,11 +2286,9 @@ img{
                 ♥
             </div>
 
-
             <h2 class="letter-title">
                 ლიზუნაა,
             </h2>
-
 
             <div class="letter-text">
 
@@ -2427,13 +2316,11 @@ img{
 
             </div>
 
-
             <div class="signature">
                 სიყვარულით შენი ლუკა❤️
             </div>
 
         </article>
-
 
         <button
             id="letterBack"
@@ -2642,7 +2529,6 @@ function handleNo(){
         "bump"
     );
 
-
     if(noClicks === 1){
 
         yesButton.classList.add(
@@ -2657,7 +2543,6 @@ function handleNo(){
 
     }
 
-
     if(noClicks === 2){
 
         yesButton.style.width =
@@ -2667,7 +2552,6 @@ function handleNo(){
             "70px";
 
     }
-
 
     if(noClicks === 3){
 
@@ -2679,7 +2563,6 @@ function handleNo(){
 
     }
 
-
     if(noClicks === 4){
 
         yesButton.style.width =
@@ -2690,7 +2573,6 @@ function handleNo(){
 
     }
 
-
     if(noClicks === 5){
 
         yesButton.style.width =
@@ -2700,7 +2582,6 @@ function handleNo(){
             "96px";
 
     }
-
 
     if(noClicks >= 6){
 
@@ -2781,8 +2662,8 @@ document
         goToScene("music");
 
         /*
-         * მუსიკა უკვე შესვლისას ჩაირთო,
-         * ამიტომ აქ ხელახლა გაშვება აღარ გვჭირდება.
+         * თუ მუსიკა უკვე ჩაირთო,
+         * აქ უბრალოდ მუსიკის გვერდზე გადავდივართ.
          */
 
     });
@@ -2831,8 +2712,7 @@ document
 
 
 /* =========================================================
-   MUSIC
-   iPhone / Safari USER-GESTURE SYSTEM
+   AUDIO
 ========================================================= */
 
 audio.preload =
@@ -2845,17 +2725,48 @@ audio.muted =
     false;
 
 
+/* =========================================================
+   ENTER
+   მთავარი გასწორება
+========================================================= */
+
 /*
- * ეს არის მთავარი ნაწილი.
+ * ძველ კოდში პრობლემა იყო:
  *
- * audio.play() პირდაპირ გამოძახებულია
- * "შესვლა" ღილაკის click event-იდან.
+ *     await audio.play()
  *
- * iPhone Safari-სთვის ეს არის რეალური
- * user gesture.
+ * და მხოლოდ ამის შემდეგ:
+ *
+ *     musicGate.classList.add("hidden")
+ *
+ * თუ iPhone Safari-მ აუდიო დაბლოკა,
+ * await ჩავარდებოდა და gate ეკრანზე რჩებოდა.
+ *
+ * ახლა:
+ *
+ * 1. საიტი იხსნება მაშინვე.
+ * 2. იმავე user gesture-ში ვიწყებთ მუსიკას.
+ * 3. თუ მუსიკა გაეშვა — მშვენიერია.
+ * 4. თუ Safari-მ დაბლოკა — საიტი მაინც იხსნება.
+ * 5. მომხმარებელს შეცდომის შეტყობინება არ ეჩვენება.
  */
 
-async function enterSite(){
+function enterSite(){
+
+    /*
+     * პირველივე მოქმედება:
+     * შესვლის ეკრანის მოცილება.
+     */
+
+    musicGate.classList.add(
+        "hidden"
+    );
+
+
+    /*
+     * მუსიკის გაშვება პირდაპირ
+     * button click-ის user gesture-ში.
+     */
 
     try{
 
@@ -2868,51 +2779,81 @@ async function enterSite(){
         audio.muted =
             false;
 
-        await audio.play();
+        const playPromise =
+            audio.play();
 
-        musicStarted =
-            true;
 
-        document.body.classList.add(
-            "music-playing"
-        );
+        /*
+         * Promise-ს ვამუშავებთ,
+         * მაგრამ საიტის გახსნას აღარ ვაბლოკავთ.
+         */
 
-        setMusicPlayingUI(
-            true
-        );
+        if(playPromise){
 
-        musicGate.classList.add(
-            "hidden"
-        );
+            playPromise
+                .then(() => {
+
+                    musicStarted =
+                        true;
+
+                    document.body.classList.add(
+                        "music-playing"
+                    );
+
+                    setMusicPlayingUI(
+                        true
+                    );
+
+                })
+                .catch(() => {
+
+                    /*
+                     * აქ განზრახ არაფერს
+                     * არ ვაჩვენებთ.
+                     *
+                     * საიტი უკვე გახსნილია.
+                     */
+
+                    musicStarted =
+                        false;
+
+                });
+
+        }
 
     }catch(error){
 
         /*
-         * მომხმარებელს შეცდომას აღარ ვაჩვენებთ.
-         *
-         * Safari-ს თუ ამ მომენტში მაინც არ
-         * გაუშვია, შემდეგ დაჭერაზე თავიდან
-         * ვცდით.
+         * საიტი მაინც გაგრძელდება.
          */
 
-        console.log(
-            "Safari audio:",
-            error
-        );
+        musicStarted =
+            false;
 
     }
 
 }
 
 
+/*
+ * მხოლოდ ერთი click listener.
+ *
+ * iPhone-ზე ჩვეულებრივი click
+ * საკმარისი user gesture-ია
+ * audio.play()-ისთვის.
+ */
+
 enterButton.addEventListener(
     "click",
-    enterSite
+    enterSite,
+    {
+        once:true
+    }
 );
 
 
 /* =========================================================
-   AUDIO PLAY EVENT
+   AUDIO PLAY
 ========================================================= */
 
 audio.addEventListener(
@@ -2964,27 +2905,24 @@ audio.addEventListener(
 
 playButton.addEventListener(
     "click",
-    async event => {
+    event => {
 
         event.stopPropagation();
 
         if(audio.paused){
 
-            try{
+            const playPromise =
+                audio.play();
 
-                await audio.play();
+            if(playPromise){
 
-            }catch(error){
+                playPromise.catch(() => {
 
-                /*
-                 * აქაც მომხმარებლისთვის
-                 * შეცდომის ტექსტს არ ვაჩვენებთ.
-                 */
+                    /*
+                     * არანაირი error toast.
+                     */
 
-                console.log(
-                    "Audio play:",
-                    error
-                );
+                });
 
             }
 
@@ -3068,10 +3006,8 @@ audio.addEventListener(
                 audio.duration
             ) * 100;
 
-
         playerProgress.style.width =
             `${percent}%`;
-
 
         playerTime.textContent =
             formatTime(
@@ -3150,7 +3086,6 @@ function createParticles(amount){
             "•"
         ];
 
-
     for(
         let i = 0;
         i < amount;
@@ -3163,7 +3098,6 @@ function createParticles(amount){
         particle.className =
             "particle";
 
-
         particle.textContent =
             symbols[
                 Math.floor(
@@ -3172,67 +3106,55 @@ function createParticles(amount){
                 )
             ];
 
-
         const angle =
             Math.random() *
             Math.PI *
             2;
-
 
         const distance =
             90 +
             Math.random() *
             260;
 
-
         const x =
             Math.cos(angle) *
             distance;
 
-
         const y =
             Math.sin(angle) *
             distance;
-
 
         const rotation =
             -180 +
             Math.random() *
             360;
 
-
         particle.style.setProperty(
             "--x",
             `${x}px`
         );
-
 
         particle.style.setProperty(
             "--y",
             `${y}px`
         );
 
-
         particle.style.setProperty(
             "--r",
             `${rotation}deg`
         );
 
-
         particle.style.fontSize =
             `${8 + Math.random() * 13}px`;
-
 
         particle.style.color =
             Math.random() > .45
                 ? "#B94B67"
                 : "#2E2420";
 
-
         document.body.appendChild(
             particle
         );
-
 
         setTimeout(
             () => {
@@ -3324,7 +3246,6 @@ document.addEventListener(
             touch.clientY -
             touchStartY;
 
-
         if(
             Math.abs(dx) < 80 ||
             Math.abs(dx) < Math.abs(dy)
@@ -3333,7 +3254,6 @@ document.addEventListener(
             return;
 
         }
-
 
         if(
             currentScene === "memories" ||
@@ -3370,7 +3290,6 @@ document.addEventListener(
             accept();
 
         }
-
 
         if(
             event.key === "Escape" &&
@@ -3420,8 +3339,7 @@ document.body.classList.remove(
 
 
 /* =========================================================
-   AUDIO DEBUG ONLY
-   მომხმარებელი ამას ვერ ხედავს
+   AUDIO DEBUG
 ========================================================= */
 
 audio.addEventListener(
@@ -3435,6 +3353,11 @@ audio.addEventListener(
     }
 );
 
+
+/*
+ * მხოლოდ console-ში.
+ * მომხმარებელს არაფერი ეჩვენება.
+ */
 
 audio.addEventListener(
     "error",
@@ -3480,4 +3403,4 @@ window.addEventListener(
 
 </body>
 </html>
-
+```
