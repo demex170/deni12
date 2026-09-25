@@ -980,10 +980,10 @@ img{display:block;max-width:100%;}
     <audio
         id="audio"
         preload="auto"
-        src="./song.mp3"
+        autoplay
         playsinline
         webkit-playsinline
-        crossorigin="anonymous">
+        src="song.mp3">
     </audio>
 
 </div>
@@ -1128,16 +1128,7 @@ document.getElementById("gift1").addEventListener("click", () => {
 document.getElementById("gift2").addEventListener("click", () => {
 
     createParticles(18);
-
     goToScene("music");
-
-    /*
-     * თუ მომხმარებელი უკვე შეეხო საიტს,
-     * მუსიკას აქაც ვცდით.
-     */
-    if(!musicUnlocked){
-        unlockMusic();
-    }
 
 });
 
@@ -1165,309 +1156,228 @@ document.getElementById("letterBack").addEventListener("click", () => {
 /* =========================================================
    MUSIC SYSTEM
    iPhone / Safari compatible
+   IMPORTANT:
+   iOS Safari does NOT allow audible autoplay when a page is
+   opened from a link without a user gesture. We therefore:
+   1) try autoplay immediately;
+   2) try again on the first touch/click;
+   3) also start music directly from the site's buttons.
 ========================================================= */
 
 audio.volume = 1.0;
 audio.muted = false;
 
-/*
- * მუსიკის ჩართვის მთავარი ფუნქცია.
- * play() პირდაპირ მომხმარებლის gesture-ის დროსაც გამოიძახება.
- */
-function playMusic(){
+let musicStarted = false;
+let musicAttempted = false;
 
-    if(!audio) return;
-
-    audio.volume = 1.0;
-    audio.muted = false;
-
-    const playPromise = audio.play();
-
-    if(playPromise !== undefined){
-
-        playPromise.then(() => {
-
-            musicUnlocked = true;
-
-            document.body.classList.add("music-playing");
-
-            playButton.textContent = "Ⅱ";
-
-        }).catch(error => {
-
-            console.log(
-                "Music play failed:",
-                error.name,
-                error.message
-            );
-
-        });
-
-    }
+function setMusicPlayingUI(playing){
+    document.body.classList.toggle("music-playing", playing);
+    if(playButton) playButton.textContent = playing ? "Ⅱ" : "▶";
 }
 
-
-/*
- * iPhone-ზე პირველი შეხებისას unlock.
- */
-function unlockMusic(){
-
-    if(!audio) return;
+function startMusic(){
+    if(!audio) return Promise.reject(new Error("Audio element not found"));
 
     audio.volume = 1.0;
     audio.muted = false;
 
-    const playPromise = audio.play();
+    const promise = audio.play();
 
-    if(playPromise !== undefined){
-
-        playPromise.then(() => {
-
+    if(promise !== undefined){
+        return promise.then(() => {
+            musicStarted = true;
             musicUnlocked = true;
-
-            document.body.classList.add("music-playing");
-
-            playButton.textContent = "Ⅱ";
-
+            setMusicPlayingUI(true);
             removeMusicUnlockListeners();
-
-        }).catch(error => {
-
-            console.log(
-                "iPhone music unlock failed:",
-                error.name,
-                error.message
-            );
-
         });
-
     }
+
+    musicStarted = true;
+    musicUnlocked = true;
+    setMusicPlayingUI(true);
+    removeMusicUnlockListeners();
+    return Promise.resolve();
 }
 
+function tryStartMusic(showError = false){
+    if(!audio) return;
 
-/*
- * ერთხელ ჩაირთო → აღარ გვჭირდება unlock listeners.
- */
+    musicAttempted = true;
+
+    startMusic().catch(error => {
+        console.log(
+            "Music autoplay/user-gesture attempt:",
+            error.name,
+            error.message
+        );
+
+        /*
+         * On iPhone this normally means Safari's autoplay policy
+         * requires a real user interaction. The next touch/click
+         * will call startMusic() again.
+         */
+        if(showError){
+            showToast("ერთხელ შეეხე ეკრანს და მუსიკა ჩაირთვება");
+        }
+    });
+}
+
+function unlockMusic(){
+    if(musicStarted){
+        removeMusicUnlockListeners();
+        return;
+    }
+
+    tryStartMusic(false);
+}
+
 function removeMusicUnlockListeners(){
-
-    document.removeEventListener(
-        "touchstart",
-        unlockMusic,
-        true
-    );
-
-    document.removeEventListener(
-        "touchend",
-        unlockMusic,
-        true
-    );
-
-    document.removeEventListener(
-        "pointerdown",
-        unlockMusic,
-        true
-    );
-
-    document.removeEventListener(
-        "click",
-        unlockMusic,
-        true
-    );
+    document.removeEventListener("touchstart", unlockMusic, true);
+    document.removeEventListener("touchend", unlockMusic, true);
+    document.removeEventListener("pointerdown", unlockMusic, true);
+    document.removeEventListener("click", unlockMusic, true);
 }
 
-
 /*
- * iPhone Safari-ისთვის:
- * პირველი რეალური შეხება გვერდზე ცდილობს მუსიკის ჩართვას.
+ * FIRST TOUCH:
+ * This is the important iPhone fallback. Safari allows audio
+ * started from a genuine user gesture.
  */
 document.addEventListener(
     "touchstart",
     unlockMusic,
-    {
-        passive:true,
-        capture:true
-    }
+    {passive:true,capture:true}
 );
 
 document.addEventListener(
     "touchend",
     unlockMusic,
-    {
-        passive:true,
-        capture:true
-    }
+    {passive:true,capture:true}
 );
 
 document.addEventListener(
     "pointerdown",
     unlockMusic,
-    {
-        passive:true,
-        capture:true
-    }
+    {passive:true,capture:true}
 );
 
 document.addEventListener(
     "click",
     unlockMusic,
-    {
-        capture:true
-    }
+    {capture:true}
 );
 
-
 /*
- * Desktop / Android-ზე ავტომატური ჩართვის მცდელობა.
- * iPhone-ზე თუ დაბლოკა, ზემოთ მოცემული
- * user gesture unlock იმუშავებს.
+ * Try real autoplay immediately.
+ * It can work on some browsers/settings, but iPhone Safari
+ * may reject audible autoplay until the user interacts.
  */
 window.addEventListener("load", () => {
-
     setTimeout(() => {
-
-        playMusic();
-
-    },150);
-
+        tryStartMusic(false);
+    }, 100);
 });
 
+/*
+ * START MUSIC DIRECTLY FROM THE MAIN YES BUTTON.
+ * This is a real user gesture on iPhone.
+ */
+function startMusicFromUserGesture(){
+    if(musicStarted) return;
+
+    startMusic().catch(error => {
+        console.log("User gesture music start failed:", error.name, error.message);
+    });
+}
+
+yesButton.addEventListener("click", startMusicFromUserGesture, {capture:true});
+noButton.addEventListener("click", startMusicFromUserGesture, {capture:true});
 
 /*
- * Play / Pause ღილაკი.
+ * When the user opens the music scene, try again.
+ */
+document.getElementById("gift2").addEventListener("click", () => {
+    if(!musicStarted){
+        startMusicFromUserGesture();
+    }
+}, {capture:true});
+
+/*
+ * Play / Pause button.
  */
 playButton.addEventListener("click", function(event){
-
     event.stopPropagation();
 
     if(audio.paused){
+        startMusic().catch(error => {
+            console.log(
+                "Manual music play failed:",
+                error.name,
+                error.message
+            );
 
-        audio.volume = 1.0;
-        audio.muted = false;
-
-        const promise = audio.play();
-
-        if(promise !== undefined){
-
-            promise.then(() => {
-
-                musicUnlocked = true;
-
-                document.body.classList.add("music-playing");
-
-                playButton.textContent = "Ⅱ";
-
-                removeMusicUnlockListeners();
-
-            }).catch(error => {
-
-                console.log(
-                    "Manual music play failed:",
-                    error.name,
-                    error.message
-                );
-
-                showToast("მუსიკის ჩართვა ვერ მოხერხდა");
-
-            });
-
-        }
-
+            showToast("მუსიკის ჩართვა ვერ მოხერხდა");
+        });
     }else{
-
         audio.pause();
-
-        document.body.classList.remove("music-playing");
-
-        playButton.textContent = "▶";
-
+        setMusicPlayingUI(false);
     }
-
 });
 
-
 /*
- * აუდიოს ჩატვირთვის შეცდომა.
+ * Audio loading error.
  */
 audio.addEventListener("error", () => {
-
-    console.log(
-        "Audio error:",
-        audio.error
-    );
-
+    console.log("Audio error:", audio.error);
+    showToast("song.mp3 ვერ ჩაიტვირთა");
 });
 
-
-/*
- * მუსიკა მზადაა დასაკრავად.
- */
 audio.addEventListener("canplay", () => {
-
     console.log("song.mp3 მზად არის");
-
 });
 
+audio.addEventListener("play", () => {
+    musicStarted = true;
+    musicUnlocked = true;
+    setMusicPlayingUI(true);
+});
 
-/*
- * ხანგრძლივობის განახლება.
- */
-audio.addEventListener("loadedmetadata", () => {
-
-    if(audio.duration && isFinite(audio.duration)){
-
-        playerTime.textContent = "0:00";
-
+audio.addEventListener("pause", () => {
+    if(!audio.ended){
+        setMusicPlayingUI(false);
     }
-
 });
 
+audio.addEventListener("loadedmetadata", () => {
+    if(audio.duration && isFinite(audio.duration)){
+        playerTime.textContent = "0:00";
+    }
+});
 
-/*
- * Progress.
- */
 audio.addEventListener("timeupdate", () => {
-
     if(!audio.duration || !isFinite(audio.duration)) return;
 
     const percent =
         (audio.currentTime / audio.duration) * 100;
 
-    playerProgress.style.width =
-        `${percent}%`;
-
-    playerTime.textContent =
-        formatTime(audio.currentTime);
-
+    playerProgress.style.width = `${percent}%`;
+    playerTime.textContent = formatTime(audio.currentTime);
 });
 
-
-/*
- * დასრულებისას.
- */
 audio.addEventListener("ended", () => {
-
-    document.body.classList.remove("music-playing");
-
-    playButton.textContent = "▶";
-
+    setMusicPlayingUI(false);
     playerProgress.style.width = "0%";
-
     playerTime.textContent = "0:00";
-
 });
-
 
 function formatTime(seconds){
-
     if(!isFinite(seconds) || seconds < 0){
         return "0:00";
     }
 
-    const minutes =
-        Math.floor(seconds / 60);
+    const minutes = Math.floor(seconds / 60);
 
-    const secs =
-        Math.floor(seconds % 60)
+    const secs = Math.floor(seconds % 60)
         .toString()
         .padStart(2,"0");
 
