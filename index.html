@@ -1839,10 +1839,6 @@ img{
 
 <body>
 
-<!-- =======================================================
-     MUSIC ENTRY SCREEN
-======================================================= -->
-
 <div id="musicGate" class="music-gate">
 
     <div class="music-gate-inner">
@@ -2114,128 +2110,33 @@ img{
         <div class="memory-board">
 
             <div class="memory-photo">
-
-                <img
-                    src="memory1.jpg"
-                    alt=""
-                    onerror="
-                        this.style.display='none';
-                        this.nextElementSibling.style.display='flex';
-                    "
-                >
-
-                <div
-                    class="memory-placeholder"
-                    style="display:none"
-                >
-                    ♡
-                </div>
-
+                <img src="memory1.jpg" alt="">
+                <div class="memory-placeholder" style="display:none">♡</div>
             </div>
 
-
             <div class="memory-photo">
-
-                <img
-                    src="memory2.jpg"
-                    alt=""
-                    onerror="
-                        this.style.display='none';
-                        this.nextElementSibling.style.display='flex';
-                    "
-                >
-
-                <div
-                    class="memory-placeholder"
-                    style="display:none"
-                >
-                    ♡
-                </div>
-
+                <img src="memory2.jpg" alt="">
+                <div class="memory-placeholder" style="display:none">♡</div>
             </div>
 
-
             <div class="memory-photo">
-
-                <img
-                    src="memory3.jpg"
-                    alt=""
-                    onerror="
-                        this.style.display='none';
-                        this.nextElementSibling.style.display='flex';
-                    "
-                >
-
-                <div
-                    class="memory-placeholder"
-                    style="display:none"
-                >
-                    ♡
-                </div>
-
+                <img src="memory3.jpg" alt="">
+                <div class="memory-placeholder" style="display:none">♡</div>
             </div>
 
-
             <div class="memory-photo">
-
-                <img
-                    src="memory4.jpg"
-                    alt=""
-                    onerror="
-                        this.style.display='none';
-                        this.nextElementSibling.style.display='flex';
-                    "
-                >
-
-                <div
-                    class="memory-placeholder"
-                    style="display:none"
-                >
-                    ♡
-                </div>
-
+                <img src="memory4.jpg" alt="">
+                <div class="memory-placeholder" style="display:none">♡</div>
             </div>
 
-
             <div class="memory-photo">
-
-                <img
-                    src="memory5.jpg"
-                    alt=""
-                    onerror="
-                        this.style.display='none';
-                        this.nextElementSibling.style.display='flex';
-                    "
-                >
-
-                <div
-                    class="memory-placeholder"
-                    style="display:none"
-                >
-                    ♡
-                </div>
-
+                <img src="memory5.jpg" alt="">
+                <div class="memory-placeholder" style="display:none">♡</div>
             </div>
 
-
             <div class="memory-photo">
-
-                <img
-                    src="memory6.jpg"
-                    alt=""
-                    onerror="
-                        this.style.display='none';
-                        this.nextElementSibling.style.display='flex';
-                    "
-                >
-
-                <div
-                    class="memory-placeholder"
-                    style="display:none"
-                >
-                    ♡
-                </div>
-
+                <img src="memory6.jpg" alt="">
+                <div class="memory-placeholder" style="display:none">♡</div>
             </div>
 
         </div>
@@ -2417,6 +2318,8 @@ img{
 <audio
     id="audio"
     preload="auto"
+    playsinline
+    webkit-playsinline
     src="./song.mp3"
 ></audio>
 
@@ -2783,7 +2686,7 @@ document
 
 /* =========================================================
    MUSIC
-   iPhone / Safari SAFE USER-GESTURE SYSTEM
+   FIXED iPHONE / SAFARI SYSTEM
 ========================================================= */
 
 audio.preload =
@@ -2797,91 +2700,107 @@ audio.muted =
 
 
 /*
- * IMPORTANT:
- *
- * audio.play() ეშვება პირდაპირ
- * "შესვლა" ღილაკის click event-ში.
- *
- * არ არის setTimeout.
- * არ არის document click.
- * არ არის touchend unlock.
- * არ არის audio.load().
- *
- * ეს არის ყველაზე სუფთა გზა,
- * რომ Safari-მ user gesture დაინახოს.
- */
+    IMPORTANT:
+
+    აქ მუსიკა არ ბლოკავს საიტის გახსნას.
+
+    "შესვლა"-ზე დაჭერისთანავე:
+    1. musicGate ქრება.
+    2. audio.play() ეშვება პირდაპირ click event-ში.
+    3. თუ Safari დაუშვებს — მუსიკა ჩაირთვება.
+    4. თუ Safari დაბლოკავს — საიტი მაინც გაიხსნება.
+*/
+
 
 function enterSite(){
 
-    audio.currentTime = 0;
-    audio.volume = 1;
-    audio.muted = false;
+    /* =========================================
+       1. საიტი ყოველთვის იხსნება
+    ========================================= */
 
-    const playPromise =
-        audio.play();
+    musicGate.classList.add(
+        "hidden"
+    );
 
-    if(
-        playPromise &&
-        typeof playPromise.then === "function"
-    ){
 
-        playPromise
-            .then(() => {
+    /* =========================================
+       2. მუსიკის ჩართვის მცდელობა
+    ========================================= */
 
-                musicStarted =
-                    true;
+    try{
 
-                document.body.classList.add(
-                    "music-playing"
-                );
+        audio.muted =
+            false;
 
-                setMusicPlayingUI(
-                    true
-                );
+        audio.volume =
+            1;
 
-                musicGate.classList.add(
-                    "hidden"
-                );
-
-            })
-            .catch(error => {
-
-                console.log(
-                    "Music play failed:",
-                    error
-                );
-
-                /*
-                 * Gate არ ქრება,
-                 * რათა მომხმარებელმა ისევ
-                 * შეძლოს ღილაკზე დაჭერა.
-                 */
-
-                showToast(
-                    "მუსიკა ვერ ჩაირთო — კიდევ ერთხელ დააჭირე."
-                );
-
-            });
-
-    }else{
 
         /*
-         * ძველი ბრაუზერის fallback.
-         */
+            play() პირდაპირ click event-ის
+            ფარგლებში იძახება.
+        */
+
+        const playPromise =
+            audio.play();
+
+
+        if(
+            playPromise &&
+            typeof playPromise.then === "function"
+        ){
+
+            playPromise
+                .then(() => {
+
+                    musicStarted =
+                        true;
+
+                    document.body.classList.add(
+                        "music-playing"
+                    );
+
+                    setMusicPlayingUI(
+                        true
+                    );
+
+                })
+                .catch(error => {
+
+                    /*
+                        აქ საიტი აღარ იკეტება.
+
+                        მხოლოდ მუსიკა ვერ ჩაირთო.
+                    */
+
+                    musicStarted =
+                        false;
+
+                    document.body.classList.remove(
+                        "music-playing"
+                    );
+
+                    setMusicPlayingUI(
+                        false
+                    );
+
+                    console.log(
+                        "Safari / audio play failed:",
+                        error
+                    );
+
+                });
+
+        }
+
+    }catch(error){
 
         musicStarted =
-            true;
+            false;
 
-        document.body.classList.add(
-            "music-playing"
-        );
-
-        setMusicPlayingUI(
-            true
-        );
-
-        musicGate.classList.add(
-            "hidden"
+        console.log(
+            "Audio error:",
+            error
         );
 
     }
@@ -2954,22 +2873,33 @@ playButton.addEventListener(
 
         if(audio.paused){
 
-            const playPromise =
-                audio.play();
+            try{
 
-            if(
-                playPromise &&
-                typeof playPromise.then === "function"
-            ){
+                const playPromise =
+                    audio.play();
 
-                playPromise.catch(error => {
+                if(
+                    playPromise &&
+                    typeof playPromise.then === "function"
+                ){
 
-                    console.log(
-                        "Audio play:",
-                        error
-                    );
+                    playPromise.catch(error => {
 
-                });
+                        console.log(
+                            "Audio play:",
+                            error
+                        );
+
+                    });
+
+                }
+
+            }catch(error){
+
+                console.log(
+                    "Audio play error:",
+                    error
+                );
 
             }
 
