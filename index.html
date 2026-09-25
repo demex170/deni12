@@ -760,6 +760,28 @@ document.addEventListener("keydown", event => {
 
 document.body.classList.remove("music-playing");
 
+function startMusic(){
+    if(!audio.paused) return;
+    audio.play().then(() => {
+        document.body.classList.add("music-playing");
+        playButton.textContent = "Ⅱ";
+    }).catch(() => {
+        // ბრაუზერმა დაბლოკა ავტომატური დაკვრა — დაველოდოთ პირველ შეხებას
+    });
+}
+
+startMusic();
+
+function unlockAndPlay(){
+    startMusic();
+    document.removeEventListener("click", unlockAndPlay);
+    document.removeEventListener("touchend", unlockAndPlay);
+    document.removeEventListener("keydown", unlockAndPlay);
+}
+document.addEventListener("click", unlockAndPlay, { once:true });
+document.addEventListener("touchend", unlockAndPlay, { once:true });
+document.addEventListener("keydown", unlockAndPlay, { once:true });
+
 window.addEventListener("error", event => {
     if(event.target && (event.target.tagName === "IMG" || event.target.tagName === "AUDIO")) return;
 }, true);
