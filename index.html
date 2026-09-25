@@ -24,10 +24,6 @@
 
 <style>
 
-/* =========================================================
-   RESET
-========================================================= */
-
 *,*::before,*::after{
     box-sizing:border-box;
     margin:0;
@@ -93,10 +89,6 @@ img{
     --white:#FFFDF8;
     --ease:cubic-bezier(.22,.8,.22,1);
 }
-
-/* =========================================================
-   APP
-========================================================= */
 
 .app{
     position:relative;
@@ -1881,10 +1873,6 @@ img{
 
 <div class="app">
 
-<!-- =======================================================
-     HEADER
-======================================================= -->
-
 <header class="header">
 
     <div class="eyebrow">
@@ -1897,10 +1885,6 @@ img{
 
 </header>
 
-
-<!-- =======================================================
-     QUESTION
-======================================================= -->
 
 <section
     id="sceneQuestion"
@@ -1971,10 +1955,6 @@ img{
 </section>
 
 
-<!-- =======================================================
-     GIFTS
-======================================================= -->
-
 <section
     id="sceneGifts"
     class="scene"
@@ -2011,9 +1991,6 @@ img{
 
         <div class="keepsakes">
 
-
-            <!-- MEMORY -->
-
             <button
                 class="gift"
                 id="gift1"
@@ -2048,8 +2025,6 @@ img{
             </button>
 
 
-            <!-- MUSIC -->
-
             <button
                 class="gift"
                 id="gift2"
@@ -2083,8 +2058,6 @@ img{
 
             </button>
 
-
-            <!-- LETTER -->
 
             <button
                 class="gift"
@@ -2126,10 +2099,6 @@ img{
 </section>
 
 
-<!-- =======================================================
-     MEMORIES
-======================================================= -->
-
 <section
     id="sceneMemories"
     class="scene"
@@ -2143,7 +2112,6 @@ img{
 
 
         <div class="memory-board">
-
 
             <div class="memory-photo">
 
@@ -2286,17 +2254,12 @@ img{
 </section>
 
 
-<!-- =======================================================
-     MUSIC
-======================================================= -->
-
 <section
     id="sceneMusic"
     class="scene"
 >
 
     <div class="music-wrap">
-
 
         <div class="vinyl-card">
 
@@ -2372,10 +2335,6 @@ img{
 
 </section>
 
-
-<!-- =======================================================
-     LETTER
-======================================================= -->
 
 <section
     id="sceneLetter"
@@ -2458,8 +2417,6 @@ img{
 <audio
     id="audio"
     preload="auto"
-    playsinline
-    webkit-playsinline
     src="./song.mp3"
 ></audio>
 
@@ -2543,9 +2500,6 @@ let toastTimer =
     null;
 
 let musicStarted =
-    false;
-
-let musicUnlocked =
     false;
 
 
@@ -2782,15 +2736,6 @@ document
 
         goToScene("music");
 
-        /*
-         * მუსიკა უკვე შესვლისას ჩაირთო,
-         * მაგრამ იმ შემთხვევისთვის თუ ვერ
-         * ჩაირთო (Safari/iPhone), ეს კლიკიც
-         * გამოვიყენოთ ხელახლა საცდელად.
-         */
-
-        tryPlayAudio();
-
     });
 
 
@@ -2838,7 +2783,7 @@ document
 
 /* =========================================================
    MUSIC
-   iPhone / Safari USER-GESTURE SYSTEM
+   iPhone / Safari SAFE USER-GESTURE SYSTEM
 ========================================================= */
 
 audio.preload =
@@ -2850,45 +2795,27 @@ audio.volume =
 audio.muted =
     false;
 
-/*
- * iOS Safari-ს ძალიან სჯერა მხოლოდ იმ
- * play() გამოძახების, რომელიც პირდაპირ,
- * სინქრონულად ხდება click event-ის შიგნით.
- * ამიტომ აქ აღარ ვცდილობთ currentTime-ის
- * გადაყენებას დაკვრამდე (ეს iOS-ზე
- * InvalidStateError-ს იწვევდა და მთელი
- * play() ცდა წყდებოდა ჩუმად) და load()-საც
- * წინასწარ ვუშვებთ, რომ აუდიო რაც შეიძლება
- * მალე იყოს მზად.
- */
-
-try{
-
-    audio.load();
-
-}catch(error){
-
-    console.log(
-        "Audio preload:",
-        error
-    );
-
-}
-
 
 /*
- * ერთი საერთო ფუნქცია დაკვრის საცდელად,
- * რომელიც უსაფრთხოდ იჭერს უარყოფას და
- * აახლებს UI-ს მხოლოდ წარმატებაზე.
+ * IMPORTANT:
+ *
+ * audio.play() ეშვება პირდაპირ
+ * "შესვლა" ღილაკის click event-ში.
+ *
+ * არ არის setTimeout.
+ * არ არის document click.
+ * არ არის touchend unlock.
+ * არ არის audio.load().
+ *
+ * ეს არის ყველაზე სუფთა გზა,
+ * რომ Safari-მ user gesture დაინახოს.
  */
 
-function tryPlayAudio(){
+function enterSite(){
 
-    if(musicStarted && !audio.paused){
-
-        return Promise.resolve();
-
-    }
+    audio.currentTime = 0;
+    audio.volume = 1;
+    audio.muted = false;
 
     const playPromise =
         audio.play();
@@ -2898,86 +2825,66 @@ function tryPlayAudio(){
         typeof playPromise.then === "function"
     ){
 
-        return playPromise
+        playPromise
             .then(() => {
 
-                musicUnlocked =
+                musicStarted =
                     true;
+
+                document.body.classList.add(
+                    "music-playing"
+                );
+
+                setMusicPlayingUI(
+                    true
+                );
+
+                musicGate.classList.add(
+                    "hidden"
+                );
 
             })
             .catch(error => {
 
                 console.log(
-                    "Audio play retry:",
+                    "Music play failed:",
                     error
+                );
+
+                /*
+                 * Gate არ ქრება,
+                 * რათა მომხმარებელმა ისევ
+                 * შეძლოს ღილაკზე დაჭერა.
+                 */
+
+                showToast(
+                    "მუსიკა ვერ ჩაირთო — კიდევ ერთხელ დააჭირე."
                 );
 
             });
 
-    }
+    }else{
 
-    return Promise.resolve();
+        /*
+         * ძველი ბრაუზერის fallback.
+         */
 
-}
+        musicStarted =
+            true;
 
+        document.body.classList.add(
+            "music-playing"
+        );
 
-/*
- * "შესვლა" ღილაკზე დაჭერისას (ეს არის
- * ნამდვილი user gesture როგორც
- * Safari-სთვის, ისე iPhone-ისთვისაც)
- * პირდაპირ, არაფრის დალოდების გარეშე,
- * ვცდილობთ დაკვრას.
- *
- * გვერდი შემდეგ ეტაპზე გადადის მიუხედავად
- * იმისა, წარმატდა თუ ვერა დაკვრა — რომ
- * მომხმარებელი არასდროს დარჩეს
- * "შესვლის" ეკრანზე გამორთული.
- */
+        setMusicPlayingUI(
+            true
+        );
 
-function enterSite(){
-
-    audio.muted =
-        false;
-
-    audio.volume =
-        1;
-
-    let playPromise;
-
-    try{
-
-        playPromise =
-            audio.play();
-
-    }catch(error){
-
-        playPromise =
-            Promise.reject(error);
+        musicGate.classList.add(
+            "hidden"
+        );
 
     }
-
-    Promise.resolve(playPromise)
-        .then(() => {
-
-            musicUnlocked =
-                true;
-
-        })
-        .catch(error => {
-
-            console.log(
-                "Safari/iOS audio:",
-                error
-            );
-
-        })
-        .finally(() => {
-
-            musicGate.classList.add(
-                "hidden"
-            );
-
-        });
 
 }
 
@@ -2985,52 +2892,6 @@ function enterSite(){
 enterButton.addEventListener(
     "click",
     enterSite
-);
-
-
-/*
- * გარანტიის დამატებითი ფენა:
- * თუ რაიმე მიზეზით პირველი მცდელობა
- * ვერ ჩაირთო (Safari-ს ავტოკვების
- * პოლიტიკა ხანდახან პირველივე tap-საც
- * კი უარყოფს), ნებისმიერი შემდეგი შეხება
- * გვერდზე ერთხელ კიდევ ცდის დაკვრას,
- * სანამ არ ჩაირთვება.
- */
-
-function unlockOnAnyInteraction(){
-
-    if(musicUnlocked){
-
-        document.removeEventListener(
-            "touchend",
-            unlockOnAnyInteraction
-        );
-
-        document.removeEventListener(
-            "click",
-            unlockOnAnyInteraction
-        );
-
-        return;
-
-    }
-
-    tryPlayAudio();
-
-}
-
-document.addEventListener(
-    "touchend",
-    unlockOnAnyInteraction,
-    {
-        passive:true
-    }
-);
-
-document.addEventListener(
-    "click",
-    unlockOnAnyInteraction
 );
 
 
@@ -3043,9 +2904,6 @@ audio.addEventListener(
     () => {
 
         musicStarted =
-            true;
-
-        musicUnlocked =
             true;
 
         document.body.classList.add(
@@ -3090,13 +2948,30 @@ audio.addEventListener(
 
 playButton.addEventListener(
     "click",
-    async event => {
+    event => {
 
         event.stopPropagation();
 
         if(audio.paused){
 
-            await tryPlayAudio();
+            const playPromise =
+                audio.play();
+
+            if(
+                playPromise &&
+                typeof playPromise.then === "function"
+            ){
+
+                playPromise.catch(error => {
+
+                    console.log(
+                        "Audio play:",
+                        error
+                    );
+
+                });
+
+            }
 
         }else{
 
@@ -3199,6 +3074,9 @@ audio.addEventListener(
 audio.addEventListener(
     "ended",
     () => {
+
+        musicStarted =
+            false;
 
         setMusicPlayingUI(
             false
@@ -3530,8 +3408,7 @@ document.body.classList.remove(
 
 
 /* =========================================================
-   AUDIO DEBUG ONLY
-   მომხმარებელი ამას ვერ ხედავს
+   AUDIO DEBUG
 ========================================================= */
 
 audio.addEventListener(
