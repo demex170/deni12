@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ka">
 <head>
@@ -2546,6 +2545,9 @@ let toastTimer =
 let musicStarted =
     false;
 
+let musicUnlocked =
+    false;
+
 
 /* =========================================================
    NO MESSAGES
@@ -2782,8 +2784,12 @@ document
 
         /*
          * მუსიკა უკვე შესვლისას ჩაირთო,
-         * ამიტომ აქ ხელახლა გაშვება აღარ გვჭირდება.
+         * მაგრამ იმ შემთხვევისთვის თუ ვერ
+         * ჩაირთო (Safari/iPhone), ეს კლიკიც
+         * გამოვიყენოთ ხელახლა საცდელად.
          */
+
+        tryPlayAudio();
 
     });
 
@@ -2844,63 +2850,134 @@ audio.volume =
 audio.muted =
     false;
 
-
 /*
- * ეს არის მთავარი ნაწილი.
- *
- * audio.play() პირდაპირ გამოძახებულია
- * "შესვლა" ღილაკის click event-იდან.
- *
- * iPhone Safari-სთვის ეს არის რეალური
- * user gesture.
+ * iOS Safari-ს ძალიან სჯერა მხოლოდ იმ
+ * play() გამოძახების, რომელიც პირდაპირ,
+ * სინქრონულად ხდება click event-ის შიგნით.
+ * ამიტომ აქ აღარ ვცდილობთ currentTime-ის
+ * გადაყენებას დაკვრამდე (ეს iOS-ზე
+ * InvalidStateError-ს იწვევდა და მთელი
+ * play() ცდა წყდებოდა ჩუმად) და load()-საც
+ * წინასწარ ვუშვებთ, რომ აუდიო რაც შეიძლება
+ * მალე იყოს მზად.
  */
 
-async function enterSite(){
+try{
+
+    audio.load();
+
+}catch(error){
+
+    console.log(
+        "Audio preload:",
+        error
+    );
+
+}
+
+
+/*
+ * ერთი საერთო ფუნქცია დაკვრის საცდელად,
+ * რომელიც უსაფრთხოდ იჭერს უარყოფას და
+ * აახლებს UI-ს მხოლოდ წარმატებაზე.
+ */
+
+function tryPlayAudio(){
+
+    if(musicStarted && !audio.paused){
+
+        return Promise.resolve();
+
+    }
+
+    const playPromise =
+        audio.play();
+
+    if(
+        playPromise &&
+        typeof playPromise.then === "function"
+    ){
+
+        return playPromise
+            .then(() => {
+
+                musicUnlocked =
+                    true;
+
+            })
+            .catch(error => {
+
+                console.log(
+                    "Audio play retry:",
+                    error
+                );
+
+            });
+
+    }
+
+    return Promise.resolve();
+
+}
+
+
+/*
+ * "შესვლა" ღილაკზე დაჭერისას (ეს არის
+ * ნამდვილი user gesture როგორც
+ * Safari-სთვის, ისე iPhone-ისთვისაც)
+ * პირდაპირ, არაფრის დალოდების გარეშე,
+ * ვცდილობთ დაკვრას.
+ *
+ * გვერდი შემდეგ ეტაპზე გადადის მიუხედავად
+ * იმისა, წარმატდა თუ ვერა დაკვრა — რომ
+ * მომხმარებელი არასდროს დარჩეს
+ * "შესვლის" ეკრანზე გამორთული.
+ */
+
+function enterSite(){
+
+    audio.muted =
+        false;
+
+    audio.volume =
+        1;
+
+    let playPromise;
 
     try{
 
-        audio.currentTime =
-            0;
-
-        audio.volume =
-            1;
-
-        audio.muted =
-            false;
-
-        await audio.play();
-
-        musicStarted =
-            true;
-
-        document.body.classList.add(
-            "music-playing"
-        );
-
-        setMusicPlayingUI(
-            true
-        );
-
-        musicGate.classList.add(
-            "hidden"
-        );
+        playPromise =
+            audio.play();
 
     }catch(error){
 
-        /*
-         * მომხმარებელს შეცდომას აღარ ვაჩვენებთ.
-         *
-         * Safari-ს თუ ამ მომენტში მაინც არ
-         * გაუშვია, შემდეგ დაჭერაზე თავიდან
-         * ვცდით.
-         */
-
-        console.log(
-            "Safari audio:",
-            error
-        );
+        playPromise =
+            Promise.reject(error);
 
     }
+
+    Promise.resolve(playPromise)
+        .then(() => {
+
+            musicUnlocked =
+                true;
+
+        })
+        .catch(error => {
+
+            console.log(
+                "Safari/iOS audio:",
+                error
+            );
+
+        })
+        .finally(() => {
+
+            musicGate.classList.add(
+                "hidden"
+            );
+
+        });
 
 }
 
@@ -2908,6 +2985,52 @@ async function enterSite(){
 enterButton.addEventListener(
     "click",
     enterSite
+);
+
+
+/*
+ * გარანტიის დამატებითი ფენა:
+ * თუ რაიმე მიზეზით პირველი მცდელობა
+ * ვერ ჩაირთო (Safari-ს ავტოკვების
+ * პოლიტიკა ხანდახან პირველივე tap-საც
+ * კი უარყოფს), ნებისმიერი შემდეგი შეხება
+ * გვერდზე ერთხელ კიდევ ცდის დაკვრას,
+ * სანამ არ ჩაირთვება.
+ */
+
+function unlockOnAnyInteraction(){
+
+    if(musicUnlocked){
+
+        document.removeEventListener(
+            "touchend",
+            unlockOnAnyInteraction
+        );
+
+        document.removeEventListener(
+            "click",
+            unlockOnAnyInteraction
+        );
+
+        return;
+
+    }
+
+    tryPlayAudio();
+
+}
+
+document.addEventListener(
+    "touchend",
+    unlockOnAnyInteraction,
+    {
+        passive:true
+    }
+);
+
+document.addEventListener(
+    "click",
+    unlockOnAnyInteraction
 );
 
 
@@ -2920,6 +3043,9 @@ audio.addEventListener(
     () => {
 
         musicStarted =
+            true;
+
+        musicUnlocked =
             true;
 
         document.body.classList.add(
@@ -2970,23 +3096,7 @@ playButton.addEventListener(
 
         if(audio.paused){
 
-            try{
-
-                await audio.play();
-
-            }catch(error){
-
-                /*
-                 * აქაც მომხმარებლისთვის
-                 * შეცდომის ტექსტს არ ვაჩვენებთ.
-                 */
-
-                console.log(
-                    "Audio play:",
-                    error
-                );
-
-            }
+            await tryPlayAudio();
 
         }else{
 
@@ -3480,4 +3590,3 @@ window.addEventListener(
 
 </body>
 </html>
-
