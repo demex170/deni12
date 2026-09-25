@@ -1,31 +1,85 @@
+
 <!DOCTYPE html>
 <html lang="ka">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+
+<meta
+    name="viewport"
+    content="width=device-width,
+    initial-scale=1.0,
+    maximum-scale=1.0,
+    user-scalable=no,
+    viewport-fit=cover"
+>
+
 <title>პატარა, სარისკო რამ</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+>
 
 <style>
 
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+/* =========================================================
+   RESET
+========================================================= */
 
-html{width:100%;min-height:100%;background:#231A17;scroll-behavior:smooth;}
+*,*::before,*::after{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    width:100%;
+    min-height:100%;
+    background:#231A17;
+    scroll-behavior:smooth;
+}
 
 body{
-    width:100%;min-height:100svh;overflow:hidden;
-    background:#FBF2E6;color:#2E2420;
-    font-family:"Noto Sans Georgian",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    width:100%;
+    min-height:100svh;
+    overflow:hidden;
+    background:#FBF2E6;
+    color:#2E2420;
+
+    font-family:
+        "Noto Sans Georgian",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+
     padding-top:env(safe-area-inset-top,0px);
     padding-bottom:env(safe-area-inset-bottom,0px);
 }
 
-button{appearance:none;-webkit-appearance:none;border:0;outline:0;font:inherit;cursor:pointer;user-select:none;-webkit-user-select:none;background:none;}
-img{display:block;max-width:100%;}
+button{
+    appearance:none;
+    -webkit-appearance:none;
+    border:0;
+    outline:0;
+    font:inherit;
+    cursor:pointer;
+    user-select:none;
+    -webkit-user-select:none;
+    background:none;
+}
+
+img{
+    display:block;
+    max-width:100%;
+}
 
 :root{
     --paper:#FBF2E6;
@@ -41,32 +95,209 @@ img{display:block;max-width:100%;}
     --ease:cubic-bezier(.22,.8,.22,1);
 }
 
-/* ========================================================= APP */
+/* =========================================================
+   APP
+========================================================= */
 
 .app{
-    position:relative;width:100%;height:100svh;overflow:hidden;
+    position:relative;
+    width:100%;
+    height:100svh;
+    overflow:hidden;
+
     background:
-        radial-gradient(circle at 18% 8%, rgba(185,75,103,.05), transparent 45%),
-        radial-gradient(circle at 85% 92%, rgba(198,124,70,.06), transparent 50%),
+        radial-gradient(
+            circle at 18% 8%,
+            rgba(185,75,103,.05),
+            transparent 45%
+        ),
+        radial-gradient(
+            circle at 85% 92%,
+            rgba(198,124,70,.06),
+            transparent 50%
+        ),
         var(--paper);
 }
 
-/* ========================================================= HEADER */
+/* =========================================================
+   MUSIC ENTRY GATE
+========================================================= */
+
+.music-gate{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    padding:
+        calc(30px + env(safe-area-inset-top,0px))
+        30px
+        calc(30px + env(safe-area-inset-bottom,0px));
+
+    background:#FBF2E6;
+
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+
+    transition:
+        opacity .65s var(--ease),
+        visibility 0s linear 0s;
+}
+
+.music-gate.hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+
+    transition:
+        opacity .55s var(--ease),
+        visibility 0s linear .55s;
+}
+
+.music-gate-inner{
+    width:min(420px,100%);
+    text-align:center;
+}
+
+.music-gate-small{
+    color:var(--rust);
+    font-size:12px;
+    font-weight:600;
+    margin-bottom:10px;
+    letter-spacing:.02em;
+}
+
+.music-gate-title{
+    color:var(--rose-deep);
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
+    font-weight:500;
+    font-size:clamp(25px,7vw,36px);
+    line-height:1.25;
+
+    margin-bottom:28px;
+}
+
+.music-gate-title span{
+    color:var(--rose);
+    display:inline-block;
+    animation:gateHeart 1.8s ease-in-out infinite;
+}
+
+@keyframes gateHeart{
+    0%,100%{
+        transform:scale(1);
+    }
+
+    8%{
+        transform:scale(1.15);
+    }
+
+    16%{
+        transform:scale(1);
+    }
+
+    24%{
+        transform:scale(1.1);
+    }
+
+    32%{
+        transform:scale(1);
+    }
+}
+
+#enterButton{
+    width:170px;
+    height:56px;
+
+    border-radius:14px;
+
+    color:var(--white);
+
+    background:
+        linear-gradient(
+            180deg,
+            #C25E79,
+            #8A3450
+        );
+
+    box-shadow:
+        0 12px 28px rgba(138,52,80,.25);
+
+    font-size:16px;
+    font-weight:600;
+
+    transition:
+        transform .2s ease,
+        box-shadow .25s ease;
+}
+
+#enterButton:active{
+    transform:scale(.94);
+}
+
+#enterButton:hover{
+    box-shadow:
+        0 16px 34px rgba(138,52,80,.30);
+}
+
+.music-gate-note{
+    margin-top:20px;
+    color:var(--rose);
+    font-size:18px;
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
 
 .header{
-    position:absolute;top:0;left:0;width:100%;
-    padding:calc(env(safe-area-inset-top,0px) + 22px) 22px 20px;
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+
+    padding:
+        calc(env(safe-area-inset-top,0px) + 22px)
+        22px
+        20px;
+
     z-index:100;
+
     background:
-        linear-gradient(180deg, rgba(251,242,230,1) 55%, rgba(251,242,230,0));
+        linear-gradient(
+            180deg,
+            rgba(251,242,230,1) 55%,
+            rgba(251,242,230,0)
+        );
+
     text-align:center;
-    opacity:1;visibility:visible;pointer-events:auto;
-    transition:opacity .35s var(--ease), visibility 0s linear 0s;
+
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+
+    transition:
+        opacity .35s var(--ease),
+        visibility 0s linear 0s;
 }
 
 .header.hidden{
-    opacity:0;visibility:hidden;pointer-events:none;
-    transition:opacity .3s var(--ease), visibility 0s linear .3s;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+
+    transition:
+        opacity .3s var(--ease),
+        visibility 0s linear .3s;
 }
 
 .eyebrow{
@@ -78,444 +309,1345 @@ img{display:block;max-width:100%;}
 
 .header-title{
     color:var(--ink);
-    font-family:"Noto Serif Georgian",Georgia,serif;
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
     font-weight:500;
     font-size:clamp(21px,5.4vw,30px);
+
     letter-spacing:-.01em;
     margin-top:2px;
 }
 
-/* ========================================================= SCENE */
+/* =========================================================
+   SCENES
+========================================================= */
 
 .scene{
-    position:absolute;left:0;top:0;width:100%;height:100%;
-    display:flex;align-items:center;justify-content:center;
+    position:absolute;
+    left:0;
+    top:0;
+
+    width:100%;
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
     padding:118px 22px 40px;
 
-    opacity:0;visibility:hidden;pointer-events:none;
-    transform:translate3d(0,18px,0) scale(.985);
-    transition:opacity .5s var(--ease), transform .65s var(--ease), visibility 0s linear .65s;
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+
+    transform:
+        translate3d(0,18px,0)
+        scale(.985);
+
+    transition:
+        opacity .5s var(--ease),
+        transform .65s var(--ease),
+        visibility 0s linear .65s;
 }
 
 .scene.active{
-    opacity:1;visibility:visible;pointer-events:auto;
-    transform:translate3d(0,0,0) scale(1);
-    transition:opacity .5s var(--ease), transform .65s var(--ease), visibility 0s;
+    opacity:1;
+    visibility:visible;
+    pointer-events:auto;
+
+    transform:
+        translate3d(0,0,0)
+        scale(1);
+
+    transition:
+        opacity .5s var(--ease),
+        transform .65s var(--ease),
+        visibility 0s;
 }
 
-/* ========================================================= QUESTION */
+/* =========================================================
+   QUESTION
+========================================================= */
 
-.question-wrap{width:min(560px,100%);display:flex;flex-direction:column;align-items:center;text-align:center;}
+.question-wrap{
+    width:min(560px,100%);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    text-align:center;
+}
 
 .character{
     width:clamp(120px,30vw,168px);
     height:clamp(102px,25vw,140px);
-    position:relative;margin-bottom:clamp(10px,3vw,20px);
+
+    position:relative;
+
+    margin-bottom:
+        clamp(10px,3vw,20px);
 }
 
-.character .ear{position:absolute;width:26%;height:33%;top:3%;background:var(--paper);border:3px solid var(--ink);}
-.character .ear.left{left:22%;transform:rotate(-26deg) skew(-6deg);border-radius:70% 20% 40% 20%;}
-.character .ear.right{right:22%;transform:rotate(26deg) skew(6deg);border-radius:20% 70% 20% 40%;}
+.character .ear{
+    position:absolute;
+
+    width:26%;
+    height:33%;
+    top:3%;
+
+    background:var(--paper);
+    border:3px solid var(--ink);
+}
+
+.character .ear.left{
+    left:22%;
+
+    transform:
+        rotate(-26deg)
+        skew(-6deg);
+
+    border-radius:
+        70% 20% 40% 20%;
+}
+
+.character .ear.right{
+    right:22%;
+
+    transform:
+        rotate(26deg)
+        skew(6deg);
+
+    border-radius:
+        20% 70% 20% 40%;
+}
 
 .character .head{
-    position:absolute;left:50%;top:19%;width:58%;height:57%;transform:translateX(-50%);
-    background:var(--white);border:3px solid var(--ink);border-radius:44% 46% 48% 44%;z-index:2;
+    position:absolute;
+
+    left:50%;
+    top:19%;
+
+    width:58%;
+    height:57%;
+
+    transform:translateX(-50%);
+
+    background:var(--white);
+
+    border:3px solid var(--ink);
+
+    border-radius:
+        44% 46% 48% 44%;
+
+    z-index:2;
 }
 
-.character .eye{position:absolute;width:8.5%;height:12%;top:39%;border-radius:50%;background:var(--ink);}
-.character .eye.left{left:28%;}
-.character .eye.right{right:28%;}
+.character .eye{
+    position:absolute;
 
-.character .nose{position:absolute;left:50%;top:53%;width:7%;height:5.5%;transform:translateX(-50%);background:var(--rose-deep);border-radius:50%;}
+    width:8.5%;
+    height:12%;
+    top:39%;
 
-.character .mouth{position:absolute;left:50%;top:57%;width:15%;height:9%;transform:translateX(-50%);border-bottom:2.5px solid var(--ink);border-radius:0 0 50% 50%;}
+    border-radius:50%;
+    background:var(--ink);
+}
 
-.character .cheek{position:absolute;width:12%;height:7%;top:55%;border-radius:50%;background:var(--rose-soft);opacity:.8;}
-.character .cheek.left{left:13%;}
-.character .cheek.right{right:13%;}
+.character .eye.left{
+    left:28%;
+}
 
-.thought{position:absolute;border:2.5px solid var(--ink);border-radius:50%;opacity:.7;}
-.thought.t1{width:11px;height:11px;right:16%;top:8%;}
-.thought.t2{width:17px;height:17px;right:7%;top:0;}
-.thought.t3{width:24px;height:24px;right:-2%;top:-10%;}
+.character .eye.right{
+    right:28%;
+}
+
+.character .nose{
+    position:absolute;
+
+    left:50%;
+    top:53%;
+
+    width:7%;
+    height:5.5%;
+
+    transform:translateX(-50%);
+
+    background:var(--rose-deep);
+
+    border-radius:50%;
+}
+
+.character .mouth{
+    position:absolute;
+
+    left:50%;
+    top:57%;
+
+    width:15%;
+    height:9%;
+
+    transform:translateX(-50%);
+
+    border-bottom:2.5px solid var(--ink);
+
+    border-radius:
+        0 0 50% 50%;
+}
+
+.character .cheek{
+    position:absolute;
+
+    width:12%;
+    height:7%;
+    top:55%;
+
+    border-radius:50%;
+
+    background:var(--rose-soft);
+    opacity:.8;
+}
+
+.character .cheek.left{
+    left:13%;
+}
+
+.character .cheek.right{
+    right:13%;
+}
+
+.thought{
+    position:absolute;
+
+    border:2.5px solid var(--ink);
+    border-radius:50%;
+
+    opacity:.7;
+}
+
+.thought.t1{
+    width:11px;
+    height:11px;
+
+    right:16%;
+    top:8%;
+}
+
+.thought.t2{
+    width:17px;
+    height:17px;
+
+    right:7%;
+    top:0;
+}
+
+.thought.t3{
+    width:24px;
+    height:24px;
+
+    right:-2%;
+    top:-10%;
+}
 
 .question-text{
-    min-height:34px;margin-bottom:26px;color:var(--rose-deep);
-    font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;
-    font-size:clamp(19px,5vw,29px);letter-spacing:-.01em;
+    min-height:34px;
+
+    margin-bottom:26px;
+
+    color:var(--rose-deep);
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
+    font-weight:500;
+
+    font-size:
+        clamp(19px,5vw,29px);
+
+    letter-spacing:-.01em;
+
     transition:opacity .25s ease;
 }
 
-.question-text.bump{animation:textBump .42s var(--ease);}
-@keyframes textBump{0%{transform:scale(1);}45%{transform:scale(1.06);}100%{transform:scale(1);}}
+.question-text.bump{
+    animation:textBump .42s var(--ease);
+}
 
-.heart{color:var(--rose);display:inline-block;animation:heartBeat 1.8s ease-in-out infinite;}
-@keyframes heartBeat{0%,100%{transform:scale(1);}8%{transform:scale(1.16);}16%{transform:scale(1);}24%{transform:scale(1.1);}32%{transform:scale(1);}}
+@keyframes textBump{
+    0%{
+        transform:scale(1);
+    }
 
-.action-row{width:100%;display:flex;justify-content:center;align-items:center;gap:clamp(16px,4.5vw,36px);min-height:86px;}
+    45%{
+        transform:scale(1.06);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+}
+
+.heart{
+    color:var(--rose);
+    display:inline-block;
+
+    animation:
+        heartBeat 1.8s ease-in-out infinite;
+}
+
+@keyframes heartBeat{
+
+    0%,100%{
+        transform:scale(1);
+    }
+
+    8%{
+        transform:scale(1.16);
+    }
+
+    16%{
+        transform:scale(1);
+    }
+
+    24%{
+        transform:scale(1.1);
+    }
+
+    32%{
+        transform:scale(1);
+    }
+
+}
+
+.action-row{
+    width:100%;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:
+        clamp(16px,4.5vw,36px);
+
+    min-height:86px;
+}
 
 .action{
-    position:relative;min-width:110px;height:56px;border-radius:14px;
-    font-size:16.5px;font-weight:600;letter-spacing:-.005em;
-    transition:width .65s var(--ease),height .65s var(--ease),transform .2s var(--ease),box-shadow .25s ease,opacity .3s ease,border-radius .5s var(--ease);
+    position:relative;
+
+    min-width:110px;
+    height:56px;
+
+    border-radius:14px;
+
+    font-size:16.5px;
+    font-weight:600;
+    letter-spacing:-.005em;
+
+    transition:
+        width .65s var(--ease),
+        height .65s var(--ease),
+        transform .2s var(--ease),
+        box-shadow .25s ease,
+        opacity .3s ease,
+        border-radius .5s var(--ease);
 }
-.action:active{transform:scale(.94);}
+
+.action:active{
+    transform:scale(.94);
+}
 
 .yes{
     color:var(--white);
-    background:linear-gradient(180deg,#C25E79,var(--rose-deep));
-    box-shadow:0 10px 24px rgba(138,52,80,.22);
+
+    background:
+        linear-gradient(
+            180deg,
+            #C25E79,
+            var(--rose-deep)
+        );
+
+    box-shadow:
+        0 10px 24px rgba(138,52,80,.22);
 }
 
 .no{
     color:var(--ink-soft);
+
     background:transparent;
-    border:1.5px solid rgba(46,36,32,.18);
-}
-.no:hover{border-color:rgba(46,36,32,.32);}
 
-.yes.growing{min-width:145px;}
+    border:
+        1.5px solid rgba(46,36,32,.18);
+}
+
+.no:hover{
+    border-color:
+        rgba(46,36,32,.32);
+}
+
+.yes.growing{
+    min-width:145px;
+}
+
 .yes.huge{
-    width:min(360px,80vw);height:110px;border-radius:22px;
-    font-size:clamp(28px,7.5vw,44px);
-    font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;
-    box-shadow:0 18px 42px rgba(138,52,80,.28);
+    width:min(360px,80vw);
+    height:110px;
+
+    border-radius:22px;
+
+    font-size:
+        clamp(28px,7.5vw,44px);
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
+    font-weight:500;
+
+    box-shadow:
+        0 18px 42px rgba(138,52,80,.28);
 }
-.no.mini{width:10px;min-width:10px;height:10px;padding:0;border-radius:3px;font-size:0;opacity:.5;}
 
-/* ========================================================= GIFTS / KEEPSAKES */
+.no.mini{
+    width:10px;
+    min-width:10px;
 
-.success-wrap{width:min(640px,100%);display:flex;flex-direction:column;align-items:center;text-align:center;}
+    height:10px;
+
+    padding:0;
+
+    border-radius:3px;
+
+    font-size:0;
+
+    opacity:.5;
+}
+
+/* =========================================================
+   GIFTS
+========================================================= */
+
+.success-wrap{
+    width:min(640px,100%);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    text-align:center;
+}
 
 .success-title{
-    color:var(--rose-deep);font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;
-    font-size:clamp(20px,5vw,29px);letter-spacing:-.01em;margin-bottom:4px;
+    color:var(--rose-deep);
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
+    font-weight:500;
+
+    font-size:
+        clamp(20px,5vw,29px);
+
+    letter-spacing:-.01em;
+
+    margin-bottom:4px;
 }
-.success-title .heart{font-family:"Noto Sans Georgian",sans-serif;font-style:normal;}
 
-.kiss-character{width:145px;height:120px;position:relative;margin:2px auto 6px;animation:gentleFloat 4s ease-in-out infinite;}
-@keyframes gentleFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+.success-title .heart{
+    font-family:
+        "Noto Sans Georgian",
+        sans-serif;
 
-.kiss-character .ear{position:absolute;top:16px;width:31px;height:34px;border:3.5px solid var(--ink);background:var(--white);border-radius:50%;}
-.kiss-character .ear.left{left:30px;}
-.kiss-character .ear.right{right:30px;}
-.kiss-character .head{position:absolute;left:50%;top:25px;width:85px;height:72px;transform:translateX(-50%);background:var(--white);border:3.5px solid var(--ink);border-radius:48% 52% 45% 50%;}
-.kiss-eye{position:absolute;width:11px;height:14px;top:52px;background:var(--ink);border-radius:50%;}
-.kiss-eye.left{left:47px;}
-.kiss-eye.right{right:47px;}
-.kiss-mouth{position:absolute;left:50%;top:64px;width:26px;height:15px;transform:translateX(-50%);border-bottom:3.5px solid var(--ink);border-radius:0 0 60% 60%;}
-.kiss-mark{position:absolute;right:16px;top:32px;color:var(--rose);font-size:34px;transform:rotate(-12deg);}
+    font-style:normal;
+}
 
-.keepsakes{display:flex;justify-content:center;align-items:stretch;gap:clamp(12px,4vw,20px);margin-top:14px;width:100%;}
+.kiss-character{
+    width:145px;
+    height:120px;
+
+    position:relative;
+
+    margin:
+        2px auto 6px;
+
+    animation:
+        gentleFloat 4s ease-in-out infinite;
+}
+
+@keyframes gentleFloat{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+
+    50%{
+        transform:translateY(-5px);
+    }
+
+}
+
+.kiss-character .ear{
+    position:absolute;
+
+    top:16px;
+
+    width:31px;
+    height:34px;
+
+    border:
+        3.5px solid var(--ink);
+
+    background:var(--white);
+
+    border-radius:50%;
+}
+
+.kiss-character .ear.left{
+    left:30px;
+}
+
+.kiss-character .ear.right{
+    right:30px;
+}
+
+.kiss-character .head{
+    position:absolute;
+
+    left:50%;
+    top:25px;
+
+    width:85px;
+    height:72px;
+
+    transform:translateX(-50%);
+
+    background:var(--white);
+
+    border:
+        3.5px solid var(--ink);
+
+    border-radius:
+        48% 52% 45% 50%;
+}
+
+.kiss-eye{
+    position:absolute;
+
+    width:11px;
+    height:14px;
+
+    top:52px;
+
+    background:var(--ink);
+
+    border-radius:50%;
+}
+
+.kiss-eye.left{
+    left:47px;
+}
+
+.kiss-eye.right{
+    right:47px;
+}
+
+.kiss-mouth{
+    position:absolute;
+
+    left:50%;
+    top:64px;
+
+    width:26px;
+    height:15px;
+
+    transform:translateX(-50%);
+
+    border-bottom:
+        3.5px solid var(--ink);
+
+    border-radius:
+        0 0 60% 60%;
+}
+
+.kiss-mark{
+    position:absolute;
+
+    right:16px;
+    top:32px;
+
+    color:var(--rose);
+
+    font-size:34px;
+
+    transform:rotate(-12deg);
+}
+
+.keepsakes{
+    display:flex;
+
+    justify-content:center;
+    align-items:stretch;
+
+    gap:
+        clamp(12px,4vw,20px);
+
+    margin-top:14px;
+
+    width:100%;
+}
 
 .gift{
-    flex:1;max-width:150px;
-    padding:22px 12px 16px;
-    display:flex;flex-direction:column;align-items:center;gap:12px;
-    background:var(--white);
-    border:1px solid rgba(46,36,32,.08);
-    border-radius:16px;
-    box-shadow:0 10px 26px rgba(138,52,80,.08);
-    transition:transform .3s var(--ease),box-shadow .3s ease,border-color .3s ease;
-}
-.gift:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(138,52,80,.14);border-color:rgba(185,75,103,.25);}
+    flex:1;
 
-.icon-giftbox{width:46px;height:44px;position:relative;margin:10px auto 6px;}
+    max-width:150px;
+
+    padding:22px 12px 16px;
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    gap:12px;
+
+    background:var(--white);
+
+    border:
+        1px solid rgba(46,36,32,.08);
+
+    border-radius:16px;
+
+    box-shadow:
+        0 10px 26px rgba(138,52,80,.08);
+
+    transition:
+        transform .3s var(--ease),
+        box-shadow .3s ease,
+        border-color .3s ease;
+}
+
+.gift:hover{
+    transform:translateY(-6px);
+
+    box-shadow:
+        0 16px 34px rgba(138,52,80,.14);
+
+    border-color:
+        rgba(185,75,103,.25);
+}
+
+.icon-giftbox{
+    width:46px;
+    height:44px;
+
+    position:relative;
+
+    margin:
+        10px auto 6px;
+}
 
 .icon-giftbox .box-lid{
-    position:absolute;left:0;top:14px;width:100%;height:9px;
-    background:var(--white);border:2px solid var(--ink);border-radius:3px;
+    position:absolute;
+
+    left:0;
+    top:14px;
+
+    width:100%;
+    height:9px;
+
+    background:var(--white);
+
+    border:
+        2px solid var(--ink);
+
+    border-radius:3px;
 }
 
 .icon-giftbox .box-body{
-    position:absolute;left:2px;top:22px;width:calc(100% - 4px);height:20px;
-    background:var(--paper-deep);border:2px solid var(--ink);border-top:0;border-radius:0 0 3px 3px;
+    position:absolute;
+
+    left:2px;
+    top:22px;
+
+    width:calc(100% - 4px);
+    height:20px;
+
+    background:var(--paper-deep);
+
+    border:
+        2px solid var(--ink);
+
+    border-top:0;
+
+    border-radius:
+        0 0 3px 3px;
 }
 
 .icon-giftbox .ribbon-v{
-    position:absolute;left:50%;top:14px;width:7px;height:28px;
-    transform:translateX(-50%);background:var(--accent);opacity:.85;
+    position:absolute;
+
+    left:50%;
+    top:14px;
+
+    width:7px;
+    height:28px;
+
+    transform:translateX(-50%);
+
+    background:var(--accent);
+
+    opacity:.85;
 }
 
 .icon-giftbox .bow-knot{
-    position:absolute;left:50%;top:10px;width:8px;height:8px;
-    transform:translate(-50%,-50%);background:var(--accent);border-radius:50%;
+    position:absolute;
+
+    left:50%;
+    top:10px;
+
+    width:8px;
+    height:8px;
+
+    transform:
+        translate(-50%,-50%);
+
+    background:var(--accent);
+
+    border-radius:50%;
 }
 
 .icon-giftbox .bow-loop{
-    position:absolute;top:2px;width:15px;height:13px;
-    border:2.5px solid var(--accent);border-radius:70% 30% 70% 30%;
+    position:absolute;
+
+    top:2px;
+
+    width:15px;
+    height:13px;
+
+    border:
+        2.5px solid var(--accent);
+
+    border-radius:
+        70% 30% 70% 30%;
 }
-.icon-giftbox .bow-loop.left{left:8px;transform:rotate(-18deg);}
-.icon-giftbox .bow-loop.right{right:8px;transform:rotate(18deg) scaleX(-1);}
 
-.gift-label{color:var(--ink);font-size:14px;font-weight:600;letter-spacing:-.005em;}
-.gift-sub{color:var(--ink-soft);font-size:12px;line-height:1.35;}
+.icon-giftbox .bow-loop.left{
+    left:8px;
+    transform:rotate(-18deg);
+}
 
-/* ========================================================= MEMORIES */
+.icon-giftbox .bow-loop.right{
+    right:8px;
+    transform:
+        rotate(18deg)
+        scaleX(-1);
+}
 
-.memory-wrap{width:min(720px,100%);display:flex;flex-direction:column;align-items:center;text-align:center;overflow:auto;max-height:100%;padding:4px 0 20px;scrollbar-width:none;}
-.memory-wrap::-webkit-scrollbar{display:none;}
+.gift-label{
+    color:var(--ink);
+
+    font-size:14px;
+    font-weight:600;
+
+    letter-spacing:-.005em;
+}
+
+.gift-sub{
+    color:var(--ink-soft);
+
+    font-size:12px;
+    line-height:1.35;
+}
+
+/* =========================================================
+   MEMORIES
+========================================================= */
+
+.memory-wrap{
+    width:min(720px,100%);
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+    text-align:center;
+
+    overflow:auto;
+
+    max-height:100%;
+
+    padding:4px 0 20px;
+
+    scrollbar-width:none;
+}
+
+.memory-wrap::-webkit-scrollbar{
+    display:none;
+}
 
 .memory-title{
-    color:var(--rose-deep);font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;
-    font-size:clamp(19px,4.8vw,26px);margin-bottom:18px;
+    color:var(--rose-deep);
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
+    font-weight:500;
+
+    font-size:
+        clamp(19px,4.8vw,26px);
+
+    margin-bottom:18px;
 }
 
-.memory-board{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,3vw,18px);margin-bottom:20px;}
+.memory-board{
+    width:100%;
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:
+        clamp(10px,3vw,18px);
+
+    margin-bottom:20px;
+}
 
 .memory-photo{
-    aspect-ratio:1/1.12;background:var(--white);border:7px solid var(--white);
-    box-shadow:0 8px 20px rgba(46,36,32,.12);overflow:hidden;
-    transform:rotate(var(--rot));transition:transform .4s var(--ease),box-shadow .4s ease;
+    aspect-ratio:1/1.12;
+
+    background:var(--white);
+
+    border:
+        7px solid var(--white);
+
+    box-shadow:
+        0 8px 20px rgba(46,36,32,.12);
+
+    overflow:hidden;
+
+    transform:
+        rotate(var(--rot));
+
+    transition:
+        transform .4s var(--ease),
+        box-shadow .4s ease;
 }
-.memory-photo:nth-child(1){--rot:-3deg;}
-.memory-photo:nth-child(2){--rot:2deg;}
-.memory-photo:nth-child(3){--rot:-1.5deg;}
-.memory-photo:nth-child(4){--rot:2.5deg;}
-.memory-photo:nth-child(5){--rot:-2deg;}
-.memory-photo:nth-child(6){--rot:1.5deg;}
-.memory-photo:hover{transform:rotate(0) translateY(-5px) scale(1.03);box-shadow:0 14px 28px rgba(46,36,32,.16);}
 
-.memory-photo img{width:100%;height:100%;object-fit:cover;background:linear-gradient(150deg,var(--paper-deep),#e6d3b8);}
+.memory-photo:nth-child(1){
+    --rot:-3deg;
+}
 
-.memory-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,var(--paper-deep),#e6d3b8);color:var(--rose-soft);font-size:22px;}
+.memory-photo:nth-child(2){
+    --rot:2deg;
+}
+
+.memory-photo:nth-child(3){
+    --rot:-1.5deg;
+}
+
+.memory-photo:nth-child(4){
+    --rot:2.5deg;
+}
+
+.memory-photo:nth-child(5){
+    --rot:-2deg;
+}
+
+.memory-photo:nth-child(6){
+    --rot:1.5deg;
+}
+
+.memory-photo:hover{
+    transform:
+        rotate(0)
+        translateY(-5px)
+        scale(1.03);
+
+    box-shadow:
+        0 14px 28px rgba(46,36,32,.16);
+}
+
+.memory-photo img{
+    width:100%;
+    height:100%;
+
+    object-fit:cover;
+
+    background:
+        linear-gradient(
+            150deg,
+            var(--paper-deep),
+            #e6d3b8
+        );
+}
+
+.memory-placeholder{
+    width:100%;
+    height:100%;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:
+        linear-gradient(
+            150deg,
+            var(--paper-deep),
+            #e6d3b8
+        );
+
+    color:var(--rose-soft);
+
+    font-size:22px;
+}
 
 .back-button{
-    min-width:132px;height:42px;padding:0 20px;border-radius:10px;
-    background:transparent;border:1.5px solid rgba(46,36,32,.18);
-    color:var(--ink-soft);font-size:13.5px;font-weight:600;
-    transition:border-color .25s ease,color .25s ease;
-}
-.back-button:hover{border-color:var(--rose);color:var(--rose-deep);}
+    min-width:132px;
+    height:42px;
 
-/* ========================================================= MUSIC */
+    padding:0 20px;
+
+    border-radius:10px;
+
+    background:transparent;
+
+    border:
+        1.5px solid rgba(46,36,32,.18);
+
+    color:var(--ink-soft);
+
+    font-size:13.5px;
+    font-weight:600;
+
+    transition:
+        border-color .25s ease,
+        color .25s ease;
+}
+
+.back-button:hover{
+    border-color:var(--rose);
+    color:var(--rose-deep);
+}
+
+/* =========================================================
+   MUSIC
+========================================================= */
 
 .music-wrap{
     width:min(760px,100%);
+
     display:grid;
-    grid-template-columns:minmax(160px,.72fr) minmax(250px,1.28fr);
-    gap:clamp(12px,3vw,22px);
+
+    grid-template-columns:
+        minmax(160px,.72fr)
+        minmax(250px,1.28fr);
+
+    gap:
+        clamp(12px,3vw,22px);
+
     align-items:stretch;
 }
 
 .vinyl-card{
     min-height:270px;
+
     border-radius:18px;
-    background:linear-gradient(150deg,var(--paper-deep),#e9d6ba);
+
+    background:
+        linear-gradient(
+            150deg,
+            var(--paper-deep),
+            #e9d6ba
+        );
+
     display:flex;
     align-items:center;
     justify-content:center;
-    box-shadow:0 10px 30px rgba(138,52,80,.1);
+
+    box-shadow:
+        0 10px 30px rgba(138,52,80,.1);
+
     overflow:hidden;
 }
 
 .vinyl{
-    width:clamp(135px,25vw,200px);
+    width:
+        clamp(135px,25vw,200px);
+
     aspect-ratio:1;
+
     border-radius:50%;
+
     position:relative;
-    background:repeating-radial-gradient(circle at center,#241A16 0 2px,#2E2119 2px 4px,#1E1512 4px 6px);
-    box-shadow:0 14px 32px rgba(0,0,0,.25);
-    animation:vinylSpin 7s linear infinite;
+
+    background:
+        repeating-radial-gradient(
+            circle at center,
+            #241A16 0 2px,
+            #2E2119 2px 4px,
+            #1E1512 4px 6px
+        );
+
+    box-shadow:
+        0 14px 32px rgba(0,0,0,.25);
+
+    animation:
+        vinylSpin 7s linear infinite;
+
     animation-play-state:paused;
 }
 
-.music-playing .vinyl{animation-play-state:running;}
+.music-playing .vinyl{
+    animation-play-state:running;
+}
 
 @keyframes vinylSpin{
-    to{transform:rotate(360deg);}
+    to{
+        transform:rotate(360deg);
+    }
 }
 
 .vinyl-center{
     position:absolute;
+
     left:50%;
     top:50%;
+
     width:30%;
+
     aspect-ratio:1;
-    transform:translate(-50%,-50%);
+
+    transform:
+        translate(-50%,-50%);
+
     border-radius:50%;
-    background:radial-gradient(circle,var(--white) 0 7%,var(--rose-soft) 8% 100%);
-    box-shadow:inset 0 0 0 3px rgba(255,255,255,.3);
+
+    background:
+        radial-gradient(
+            circle,
+            var(--white) 0 7%,
+            var(--rose-soft) 8% 100%
+        );
+
+    box-shadow:
+        inset 0 0 0 3px
+        rgba(255,255,255,.3);
 }
 
 .vinyl-label{
     position:absolute;
+
     left:50%;
     top:50%;
-    transform:translate(-50%,-50%);
+
+    transform:
+        translate(-50%,-50%);
+
     color:var(--rose-deep);
+
     font-size:9.5px;
     font-weight:700;
+
     letter-spacing:.5px;
 }
 
 .track-card{
     min-height:270px;
-    padding:clamp(18px,4vw,26px);
+
+    padding:
+        clamp(18px,4vw,26px);
+
     border-radius:18px;
+
     background:var(--white);
-    border:1px solid rgba(46,36,32,.07);
-    box-shadow:0 10px 30px rgba(46,36,32,.07);
+
+    border:
+        1px solid rgba(46,36,32,.07);
+
+    box-shadow:
+        0 10px 30px rgba(46,36,32,.07);
+
     display:flex;
+
     flex-direction:column;
     justify-content:center;
 }
 
 .track-subtitle{
     color:var(--ink-soft);
-    font-family:"Noto Serif Georgian",Georgia,serif;
-    font-size:clamp(14px,3.3vw,18px);
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(14px,3.3vw,18px);
+
     font-weight:500;
+
     margin-bottom:8px;
 }
 
 .track-title{
     color:var(--ink);
-    font-family:"Noto Serif Georgian",Georgia,serif;
-    font-size:clamp(26px,6.5vw,42px);
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(26px,6.5vw,42px);
+
     line-height:1;
+
     font-weight:600;
+
     letter-spacing:-.02em;
+
     margin-bottom:4px;
 }
 
 .track-artist{
     color:var(--rose);
+
     font-size:13px;
     font-weight:600;
+
     margin-bottom:22px;
 }
 
 .player{
     height:58px;
+
     border-radius:13px;
-    background:linear-gradient(180deg,#C25E79,var(--rose-deep));
+
+    background:
+        linear-gradient(
+            180deg,
+            #C25E79,
+            var(--rose-deep)
+        );
+
     padding:10px 12px;
+
     display:flex;
     align-items:center;
+
     gap:12px;
-    box-shadow:0 8px 20px rgba(138,52,80,.2);
+
+    box-shadow:
+        0 8px 20px rgba(138,52,80,.2);
 }
 
 .play-button{
     width:38px;
     height:38px;
-    flex:0 0 38px;
+
+    flex:
+        0 0 38px;
+
     border-radius:50%;
+
     background:var(--white);
+
     color:var(--rose-deep);
+
     display:flex;
     align-items:center;
     justify-content:center;
+
     font-size:13px;
-    transition:transform .2s ease;
+
+    transition:
+        transform .2s ease;
 }
 
-.play-button:active{transform:scale(.9);}
+.play-button:active{
+    transform:scale(.9);
+}
 
 .player-line{
     flex:1;
+
     height:4px;
+
     border-radius:99px;
-    background:rgba(255,255,255,.3);
+
+    background:
+        rgba(255,255,255,.3);
+
     overflow:hidden;
+
     position:relative;
 }
 
 .player-progress{
     position:absolute;
+
     left:0;
     top:0;
+
     width:0%;
     height:100%;
+
     background:var(--white);
+
     border-radius:99px;
 }
 
 .player-time{
     min-width:34px;
+
     text-align:right;
+
     color:var(--white);
+
     font-size:10px;
     font-weight:700;
 }
 
 .music-back{
     align-self:flex-start;
+
     margin-top:18px;
 }
 
-/* ========================================================= LETTER */
+/* =========================================================
+   LETTER
+========================================================= */
 
 #sceneLetter{
     padding-top:40px;
-    transition:opacity .5s var(--ease), transform .65s var(--ease), visibility 0s linear .65s, padding-top .4s var(--ease);
+
+    transition:
+        opacity .5s var(--ease),
+        transform .65s var(--ease),
+        visibility 0s linear .65s,
+        padding-top .4s var(--ease);
 }
 
 .letter-wrap{
     width:min(620px,100%);
+
     max-height:100%;
+
     overflow:auto;
+
     scrollbar-width:none;
+
     padding:4px 4px 25px;
 }
 
-.letter-wrap::-webkit-scrollbar{display:none;}
+.letter-wrap::-webkit-scrollbar{
+    display:none;
+}
 
 .letter-paper{
     position:relative;
+
     background:var(--white);
-    border:1px solid rgba(46,36,32,.07);
-    box-shadow:0 16px 48px rgba(46,36,32,.14);
-    padding:clamp(28px,6vw,46px);
+
+    border:
+        1px solid rgba(46,36,32,.07);
+
+    box-shadow:
+        0 16px 48px rgba(46,36,32,.14);
+
+    padding:
+        clamp(28px,6vw,46px);
+
     overflow:hidden;
+
     border-radius:4px;
 }
 
 .letter-paper::before{
     content:"";
+
     position:absolute;
+
     left:0;
     top:0;
+
     width:5px;
     height:100%;
-    background:linear-gradient(180deg,var(--rose),var(--rust));
+
+    background:
+        linear-gradient(
+            180deg,
+            var(--rose),
+            var(--rust)
+        );
 }
 
 .kiss-decoration{
     position:absolute;
+
     color:var(--rose);
+
     opacity:.7;
+
     pointer-events:none;
 }
 
 .kiss-decoration.k1{
     top:14px;
     right:22px;
+
     font-size:30px;
+
     transform:rotate(12deg);
 }
 
 .kiss-decoration.k2{
     bottom:20px;
     left:14px;
+
     font-size:22px;
+
     transform:rotate(-12deg);
 }
 
 .letter-title{
     color:var(--rose-deep);
-    font-family:"Noto Serif Georgian",Georgia,serif;
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
     font-weight:500;
-    font-size:clamp(23px,5.5vw,33px);
+
+    font-size:
+        clamp(23px,5.5vw,33px);
+
     margin-bottom:18px;
 }
 
 .letter-text{
     color:var(--ink-soft);
-    font-family:"Noto Serif Georgian",Georgia,serif;
-    font-size:clamp(14.5px,3.4vw,17px);
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
+    font-size:
+        clamp(14.5px,3.4vw,17px);
+
     line-height:1.8;
 }
 
@@ -526,75 +1658,143 @@ img{display:block;max-width:100%;}
 
 .signature{
     margin-top:26px;
+
     text-align:right;
+
     color:var(--rose-deep);
-    font-family:"Noto Serif Georgian",Georgia,serif;
+
+    font-family:
+        "Noto Serif Georgian",
+        Georgia,
+        serif;
+
     font-weight:500;
+
     font-size:22px;
 }
 
-/* ========================================================= PARTICLES */
+/* =========================================================
+   PARTICLES
+========================================================= */
 
 .particle{
     position:fixed;
+
     left:50%;
     top:50%;
+
     width:7px;
     height:7px;
+
     pointer-events:none;
+
     z-index:300;
+
     opacity:0;
-    transform:translate(-50%,-50%) scale(.3);
-    animation:particleFly 1.3s var(--ease) forwards;
+
+    transform:
+        translate(-50%,-50%)
+        scale(.3);
+
+    animation:
+        particleFly 1.3s var(--ease) forwards;
 }
 
 @keyframes particleFly{
+
     0%{
         opacity:1;
-        transform:translate(-50%,-50%) scale(.3) rotate(0);
+
+        transform:
+            translate(-50%,-50%)
+            scale(.3)
+            rotate(0);
     }
-    70%{opacity:1;}
+
+    70%{
+        opacity:1;
+    }
+
     100%{
         opacity:0;
-        transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1) rotate(var(--r));
+
+        transform:
+            translate(
+                calc(-50% + var(--x)),
+                calc(-50% + var(--y))
+            )
+            scale(1)
+            rotate(var(--r));
     }
+
 }
 
-/* ========================================================= TOAST */
+/* =========================================================
+   TOAST
+========================================================= */
 
 .toast{
     position:fixed;
+
     left:50%;
-    bottom:calc(25px + env(safe-area-inset-bottom,0px));
+
+    bottom:
+        calc(
+            25px +
+            env(safe-area-inset-bottom,0px)
+        );
+
     z-index:500;
+
     padding:11px 17px;
+
     border-radius:99px;
+
     background:var(--ink);
+
     color:var(--white);
+
     font-size:12px;
     font-weight:600;
-    box-shadow:0 10px 30px rgba(0,0,0,.25);
-    transform:translate(-50%,20px);
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.25);
+
+    transform:
+        translate(-50%,20px);
+
     opacity:0;
+
     pointer-events:none;
-    transition:opacity .3s ease,transform .3s var(--ease);
+
+    transition:
+        opacity .3s ease,
+        transform .3s var(--ease);
 }
 
 .toast.show{
     opacity:1;
-    transform:translate(-50%,0);
+
+    transform:
+        translate(-50%,0);
 }
 
-/* ========================================================= RESPONSIVE */
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media(max-width:700px){
 
     .header{
-        padding:calc(env(safe-area-inset-top,0px) + 16px) 18px 14px;
+        padding:
+            calc(env(safe-area-inset-top,0px) + 16px)
+            18px
+            14px;
     }
 
     .scene{
-        padding:96px 16px 28px;
+        padding:
+            96px 16px 28px;
     }
 
     .music-wrap{
@@ -608,6 +1808,7 @@ img{display:block;max-width:100%;}
     .track-card{
         min-height:230px;
     }
+
 }
 
 @media(max-width:430px){
@@ -628,6 +1829,7 @@ img{display:block;max-width:100%;}
     .keepsakes{
         gap:9px;
     }
+
 }
 
 @media(prefers-reduced-motion:reduce){
@@ -638,6 +1840,7 @@ img{display:block;max-width:100%;}
         transition-duration:.01ms !important;
         scroll-behavior:auto !important;
     }
+
 }
 
 </style>
@@ -645,743 +1848,1291 @@ img{display:block;max-width:100%;}
 
 <body>
 
-<div class="app">
+<!-- =======================================================
+     MUSIC ENTRY SCREEN
+======================================================= -->
 
-    <header class="header">
-        <div class="eyebrow">პატარა, სარისკო რამ</div>
-        <div class="header-title">ერთი შეკითხვა მაქვს შენთვის</div>
-    </header>
+<div id="musicGate" class="music-gate">
 
-    <!-- QUESTION -->
+    <div class="music-gate-inner">
 
-    <section id="sceneQuestion" class="scene active">
-
-        <div class="question-wrap">
-
-            <div id="questionCharacter" class="character">
-
-                <div class="thought t1"></div>
-                <div class="thought t2"></div>
-                <div class="thought t3"></div>
-
-                <div class="ear left"></div>
-                <div class="ear right"></div>
-
-                <div class="head">
-
-                    <div class="eye left"></div>
-                    <div class="eye right"></div>
-
-                    <div class="nose"></div>
-                    <div class="mouth"></div>
-
-                    <div class="cheek left"></div>
-                    <div class="cheek right"></div>
-
-                </div>
-
-            </div>
-
-            <div id="questionText" class="question-text">
-                იქნები ჩემი გოგო? <span class="heart">♥</span>
-            </div>
-
-            <div class="action-row">
-
-                <button id="yesButton" class="action yes" type="button">
-                    კი
-                </button>
-
-                <button id="noButton" class="action no" type="button">
-                    არა
-                </button>
-
-            </div>
-
+        <div class="music-gate-small">
+            პატარა, სარისკო რამ
         </div>
 
-    </section>
-
-    <!-- GIFTS -->
-
-    <section id="sceneGifts" class="scene">
-
-        <div class="success-wrap">
-
-            <div class="success-title">
-                ვიცოდი, რომ თანხმა იქნებოდი <span class="heart">♥</span>
-            </div>
-
-            <div class="kiss-character">
-
-                <div class="ear left"></div>
-                <div class="ear right"></div>
-
-                <div class="head">
-
-                    <div class="kiss-eye left"></div>
-                    <div class="kiss-eye right"></div>
-
-                    <div class="kiss-mouth"></div>
-
-                </div>
-
-                <div class="kiss-mark">♥</div>
-
-            </div>
-
-            <div class="keepsakes">
-
-                <button class="gift" id="gift1" type="button" aria-label="ჩვენი მოგონებები">
-
-                    <div class="icon-giftbox" style="--accent:var(--rose-deep)">
-
-                        <div class="box-lid"></div>
-                        <div class="box-body"></div>
-                        <div class="ribbon-v"></div>
-
-                        <div class="bow-loop left"></div>
-                        <div class="bow-loop right"></div>
-                        <div class="bow-knot"></div>
-
-                    </div>
-
-                    <div class="gift-label">
-                        ჩვენი მოგონებები
-                    </div>
-
-                    <div class="gift-sub">
-                        რამდენიმე ფოტო, ღირს შენახვა
-                    </div>
-
-                </button>
-
-                <button class="gift" id="gift2" type="button" aria-label="ჩვენი სიმღერა">
-
-                    <div class="icon-giftbox" style="--accent:var(--rust)">
-
-                        <div class="box-lid"></div>
-                        <div class="box-body"></div>
-                        <div class="ribbon-v"></div>
-
-                        <div class="bow-loop left"></div>
-                        <div class="bow-loop right"></div>
-                        <div class="bow-knot"></div>
-
-                    </div>
-
-                    <div class="gift-label">
-                        ჩვენი სიმღერა
-                    </div>
-
-                    <div class="gift-sub">
-                        ის, რაც შენ და ჩემზე მაგონებს
-                    </div>
-
-                </button>
-
-                <button class="gift" id="gift3" type="button" aria-label="წერილი">
-
-                    <div class="icon-giftbox" style="--accent:var(--moss)">
-
-                        <div class="box-lid"></div>
-                        <div class="box-body"></div>
-                        <div class="ribbon-v"></div>
-
-                        <div class="bow-loop left"></div>
-                        <div class="bow-loop right"></div>
-                        <div class="bow-knot"></div>
-
-                    </div>
-
-                    <div class="gift-label">
-                        წერილი
-                    </div>
-
-                    <div class="gift-sub">
-                        რამდენიმე სიტყვა შენთვის
-                    </div>
-
-                </button>
-
-            </div>
-
+        <div class="music-gate-title">
+            შევიდეთ? <span>♥</span>
         </div>
 
-    </section>
+        <button
+            id="enterButton"
+            type="button"
+        >
+            შესვლა
+        </button>
 
-    <!-- MEMORIES -->
-
-    <section id="sceneMemories" class="scene">
-
-        <div class="memory-wrap">
-
-            <div class="memory-title">
-                დამახსოვრებული წამები
-            </div>
-
-            <div class="memory-board">
-
-                <div class="memory-photo">
-                    <img src="memory1.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="memory-placeholder" style="display:none">♡</div>
-                </div>
-
-                <div class="memory-photo">
-                    <img src="memory2.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="memory-placeholder" style="display:none">♡</div>
-                </div>
-
-                <div class="memory-photo">
-                    <img src="memory3.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="memory-placeholder" style="display:none">♡</div>
-                </div>
-
-                <div class="memory-photo">
-                    <img src="memory4.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="memory-placeholder" style="display:none">♡</div>
-                </div>
-
-                <div class="memory-photo">
-                    <img src="memory5.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="memory-placeholder" style="display:none">♡</div>
-                </div>
-
-                <div class="memory-photo">
-                    <img src="memory6.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                    <div class="memory-placeholder" style="display:none">♡</div>
-                </div>
-
-            </div>
-
-            <button id="memoryBack" class="back-button" type="button">
-                უკან დაბრუნება
-            </button>
-
+        <div class="music-gate-note">
+            ♪
         </div>
 
-    </section>
-
-    <!-- MUSIC -->
-
-    <section id="sceneMusic" class="scene">
-
-        <div class="music-wrap">
-
-            <div class="vinyl-card">
-
-                <div class="vinyl">
-
-                    <div class="vinyl-center"></div>
-                    <div class="vinyl-label">LOVE</div>
-
-                </div>
-
-            </div>
-
-            <div class="track-card">
-
-                <div class="track-subtitle">
-                    სიმღერა, რომელიც შენ და ჩემზე მაგონებს
-                </div>
-
-                <div class="track-title">
-                    Lovesong
-                </div>
-
-                <div class="track-artist">
-                    Adele
-                </div>
-
-                <div class="player">
-
-                    <button id="playButton" class="play-button" type="button" aria-label="დაკვრა">
-                        ▶
-                    </button>
-
-                    <div class="player-line">
-                        <div id="playerProgress" class="player-progress"></div>
-                    </div>
-
-                    <div id="playerTime" class="player-time">
-                        0:00
-                    </div>
-
-                </div>
-
-                <button id="musicBack" class="back-button music-back" type="button">
-                    უკან დაბრუნება
-                </button>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- LETTER -->
-
-    <section id="sceneLetter" class="scene">
-
-        <div class="letter-wrap">
-
-            <article class="letter-paper">
-
-                <div class="kiss-decoration k1">♥</div>
-                <div class="kiss-decoration k2">♥</div>
-
-                <h2 class="letter-title">
-                    ლიზუნაა,
-                </h2>
-
-                <div class="letter-text">
-
-                    ჩემო ყველაზე განსაკუთრებულო, განსხვავებულო და ყველასგან გამორჩეულო, მიყვარხარ სიგიჟემდე.
-
-                    <br><br>
-
-                    მინდა რომ სულ ბედნიერი იყო — ეს პატარა და ცოტა მოულოდნელი ესემესი🫣🫣, რომელსაც არ ელოდი😁😁🤪.
-
-                    <br><br>
-
-                    კიდევ ბევრი უამრავი მოულოდნელი სიურპრიზი და უამრავი ლამაზი და კარგი თავგადასავალი გველოდება ჩვენ ერთად.
-
-                    <br><br>
-
-                    შენ ჩემი ცხოვრება შეცვალე უკეთესობისკენ და ზუსტად მაშინ გამოჩნდი, როცა ყველაფრის იმედი მქონდა გადაწურული — დამანახე და მასწავლე სიყვარული.
-
-                    <br><br>
-
-                    ყოველთვის ვიქნები შენი სიყვარულის სადარაჯოზე და შენი ერთგული. ჩემი იმედი ყოველთვის გქონდეს და მინდა იცოდე, რომ არასდროს არ მიგატოვებ და არასდროს არ გაგიცრუებ იმ იმედებს, რასაც შენ ჩემს მიმართ ამყარებ.
-
-                    <br><br>
-
-                    ჩემო ვარსკვლავ გოგონავ, ჩემი გადარეული გოგო ხარ შენ😁😁🤪🤪🤪. ჩემო პრინცესავ, ძალიან მიყვარხარ🌸👸😍.
-
-                </div>
-
-                <div class="signature">
-                    სიყვარულით შენი ლუკა❤️
-                </div>
-
-            </article>
-
-            <button id="letterBack" class="back-button" style="margin:18px auto 0;display:block;" type="button">
-                უკან დაბრუნება
-            </button>
-
-        </div>
-
-    </section>
-
-    <div id="toast" class="toast"></div>
-
-    <!-- MUSIC FILE -->
-    <audio
-        id="audio"
-        preload="auto"
-        autoplay
-        playsinline
-        webkit-playsinline
-        src="song.mp3">
-    </audio>
+    </div>
 
 </div>
 
+
+<div class="app">
+
+<!-- =======================================================
+     HEADER
+======================================================= -->
+
+<header class="header">
+
+    <div class="eyebrow">
+        პატარა, სარისკო რამ
+    </div>
+
+    <div class="header-title">
+        ერთი შეკითხვა მაქვს შენთვის
+    </div>
+
+</header>
+
+
+<!-- =======================================================
+     QUESTION
+======================================================= -->
+
+<section
+    id="sceneQuestion"
+    class="scene active"
+>
+
+    <div class="question-wrap">
+
+        <div
+            id="questionCharacter"
+            class="character"
+        >
+
+            <div class="thought t1"></div>
+            <div class="thought t2"></div>
+            <div class="thought t3"></div>
+
+            <div class="ear left"></div>
+            <div class="ear right"></div>
+
+            <div class="head">
+
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+
+                <div class="nose"></div>
+                <div class="mouth"></div>
+
+                <div class="cheek left"></div>
+                <div class="cheek right"></div>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="questionText"
+            class="question-text"
+        >
+            იქნები ჩემი გოგო?
+            <span class="heart">♥</span>
+        </div>
+
+
+        <div class="action-row">
+
+            <button
+                id="yesButton"
+                class="action yes"
+                type="button"
+            >
+                კი
+            </button>
+
+            <button
+                id="noButton"
+                class="action no"
+                type="button"
+            >
+                არა
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     GIFTS
+======================================================= -->
+
+<section
+    id="sceneGifts"
+    class="scene"
+>
+
+    <div class="success-wrap">
+
+        <div class="success-title">
+            ვიცოდი, რომ თანხმა იქნებოდი
+            <span class="heart">♥</span>
+        </div>
+
+
+        <div class="kiss-character">
+
+            <div class="ear left"></div>
+            <div class="ear right"></div>
+
+            <div class="head">
+
+                <div class="kiss-eye left"></div>
+                <div class="kiss-eye right"></div>
+
+                <div class="kiss-mouth"></div>
+
+            </div>
+
+            <div class="kiss-mark">
+                ♥
+            </div>
+
+        </div>
+
+
+        <div class="keepsakes">
+
+
+            <!-- MEMORY -->
+
+            <button
+                class="gift"
+                id="gift1"
+                type="button"
+                aria-label="ჩვენი მოგონებები"
+            >
+
+                <div
+                    class="icon-giftbox"
+                    style="--accent:var(--rose-deep)"
+                >
+
+                    <div class="box-lid"></div>
+                    <div class="box-body"></div>
+                    <div class="ribbon-v"></div>
+
+                    <div class="bow-loop left"></div>
+                    <div class="bow-loop right"></div>
+
+                    <div class="bow-knot"></div>
+
+                </div>
+
+                <div class="gift-label">
+                    ჩვენი მოგონებები
+                </div>
+
+                <div class="gift-sub">
+                    რამდენიმე ფოტო, ღირს შენახვა
+                </div>
+
+            </button>
+
+
+            <!-- MUSIC -->
+
+            <button
+                class="gift"
+                id="gift2"
+                type="button"
+                aria-label="ჩვენი სიმღერა"
+            >
+
+                <div
+                    class="icon-giftbox"
+                    style="--accent:var(--rust)"
+                >
+
+                    <div class="box-lid"></div>
+                    <div class="box-body"></div>
+                    <div class="ribbon-v"></div>
+
+                    <div class="bow-loop left"></div>
+                    <div class="bow-loop right"></div>
+
+                    <div class="bow-knot"></div>
+
+                </div>
+
+                <div class="gift-label">
+                    ჩვენი სიმღერა
+                </div>
+
+                <div class="gift-sub">
+                    ის, რაც შენ და ჩემზე მაგონებს
+                </div>
+
+            </button>
+
+
+            <!-- LETTER -->
+
+            <button
+                class="gift"
+                id="gift3"
+                type="button"
+                aria-label="წერილი"
+            >
+
+                <div
+                    class="icon-giftbox"
+                    style="--accent:var(--moss)"
+                >
+
+                    <div class="box-lid"></div>
+                    <div class="box-body"></div>
+                    <div class="ribbon-v"></div>
+
+                    <div class="bow-loop left"></div>
+                    <div class="bow-loop right"></div>
+
+                    <div class="bow-knot"></div>
+
+                </div>
+
+                <div class="gift-label">
+                    წერილი
+                </div>
+
+                <div class="gift-sub">
+                    რამდენიმე სიტყვა შენთვის
+                </div>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     MEMORIES
+======================================================= -->
+
+<section
+    id="sceneMemories"
+    class="scene"
+>
+
+    <div class="memory-wrap">
+
+        <div class="memory-title">
+            დამახსოვრებული წამები
+        </div>
+
+
+        <div class="memory-board">
+
+
+            <div class="memory-photo">
+
+                <img
+                    src="memory1.jpg"
+                    alt=""
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    "
+                >
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none"
+                >
+                    ♡
+                </div>
+
+            </div>
+
+
+            <div class="memory-photo">
+
+                <img
+                    src="memory2.jpg"
+                    alt=""
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    "
+                >
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none"
+                >
+                    ♡
+                </div>
+
+            </div>
+
+
+            <div class="memory-photo">
+
+                <img
+                    src="memory3.jpg"
+                    alt=""
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    "
+                >
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none"
+                >
+                    ♡
+                </div>
+
+            </div>
+
+
+            <div class="memory-photo">
+
+                <img
+                    src="memory4.jpg"
+                    alt=""
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    "
+                >
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none"
+                >
+                    ♡
+                </div>
+
+            </div>
+
+
+            <div class="memory-photo">
+
+                <img
+                    src="memory5.jpg"
+                    alt=""
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    "
+                >
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none"
+                >
+                    ♡
+                </div>
+
+            </div>
+
+
+            <div class="memory-photo">
+
+                <img
+                    src="memory6.jpg"
+                    alt=""
+                    onerror="
+                        this.style.display='none';
+                        this.nextElementSibling.style.display='flex';
+                    "
+                >
+
+                <div
+                    class="memory-placeholder"
+                    style="display:none"
+                >
+                    ♡
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button
+            id="memoryBack"
+            class="back-button"
+            type="button"
+        >
+            უკან დაბრუნება
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     MUSIC
+======================================================= -->
+
+<section
+    id="sceneMusic"
+    class="scene"
+>
+
+    <div class="music-wrap">
+
+
+        <div class="vinyl-card">
+
+            <div class="vinyl">
+
+                <div class="vinyl-center"></div>
+
+                <div class="vinyl-label">
+                    LOVE
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="track-card">
+
+            <div class="track-subtitle">
+                სიმღერა, რომელიც შენ და ჩემზე მაგონებს
+            </div>
+
+            <div class="track-title">
+                Lovesong
+            </div>
+
+            <div class="track-artist">
+                Adele
+            </div>
+
+
+            <div class="player">
+
+                <button
+                    id="playButton"
+                    class="play-button"
+                    type="button"
+                    aria-label="დაკვრა"
+                >
+                    ▶
+                </button>
+
+                <div class="player-line">
+
+                    <div
+                        id="playerProgress"
+                        class="player-progress"
+                    ></div>
+
+                </div>
+
+                <div
+                    id="playerTime"
+                    class="player-time"
+                >
+                    0:00
+                </div>
+
+            </div>
+
+
+            <button
+                id="musicBack"
+                class="back-button music-back"
+                type="button"
+            >
+                უკან დაბრუნება
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     LETTER
+======================================================= -->
+
+<section
+    id="sceneLetter"
+    class="scene"
+>
+
+    <div class="letter-wrap">
+
+        <article class="letter-paper">
+
+            <div class="kiss-decoration k1">
+                ♥
+            </div>
+
+            <div class="kiss-decoration k2">
+                ♥
+            </div>
+
+
+            <h2 class="letter-title">
+                ლიზუნაა,
+            </h2>
+
+
+            <div class="letter-text">
+
+                ჩემო ყველაზე განსაკუთრებულო, განსხვავებულო და ყველასგან გამორჩეულო, მიყვარხარ სიგიჟემდე.
+
+                <br><br>
+
+                მინდა რომ სულ ბედნიერი იყო — ეს პატარა და ცოტა მოულოდნელი ესემესი🫣🫣, რომელსაც არ ელოდი😁😁🤪.
+
+                <br><br>
+
+                კიდევ ბევრი უამრავი მოულოდნელი სიურპრიზი და უამრავი ლამაზი და კარგი თავგადასავალი გველოდება ჩვენ ერთად.
+
+                <br><br>
+
+                შენ ჩემი ცხოვრება შეცვალე უკეთესობისკენ და ზუსტად მაშინ გამოჩნდი, როცა ყველაფრის იმედი მქონდა გადაწურული — დამანახე და მასწავლე სიყვარული.
+
+                <br><br>
+
+                ყოველთვის ვიქნები შენი სიყვარულის სადარაჯოზე და შენი ერთგული. ჩემი იმედი ყოველთვის გქონდეს და მინდა იცოდე, რომ არასდროს არ მიგატოვებ და არასდროს არ გაგიცრუებ იმ იმედებს, რასაც შენ ჩემს მიმართ ამყარებ.
+
+                <br><br>
+
+                ჩემო ვარსკვლავ გოგონავ, ჩემი გადარეული გოგო ხარ შენ😁😁🤪🤪🤪. ჩემო პრინცესავ, ძალიან მიყვარხარ🌸👸😍.
+
+            </div>
+
+
+            <div class="signature">
+                სიყვარულით შენი ლუკა❤️
+            </div>
+
+        </article>
+
+
+        <button
+            id="letterBack"
+            class="back-button"
+            style="margin:18px auto 0;display:block;"
+            type="button"
+        >
+            უკან დაბრუნება
+        </button>
+
+    </div>
+
+</section>
+
+
+<div id="toast" class="toast"></div>
+
+
+<!-- =======================================================
+     AUDIO
+======================================================= -->
+
+<audio
+    id="audio"
+    preload="auto"
+    playsinline
+    webkit-playsinline
+    src="./song.mp3"
+></audio>
+
+</div>
+
+
 <script>
 
+/* =========================================================
+   SCENES
+========================================================= */
+
 const scenes = {
-    question: document.getElementById("sceneQuestion"),
-    gifts: document.getElementById("sceneGifts"),
-    memories: document.getElementById("sceneMemories"),
-    music: document.getElementById("sceneMusic"),
-    letter: document.getElementById("sceneLetter")
+
+    question:
+        document.getElementById("sceneQuestion"),
+
+    gifts:
+        document.getElementById("sceneGifts"),
+
+    memories:
+        document.getElementById("sceneMemories"),
+
+    music:
+        document.getElementById("sceneMusic"),
+
+    letter:
+        document.getElementById("sceneLetter")
+
 };
 
-const header = document.querySelector(".header");
+const header =
+    document.querySelector(".header");
 
-const questionText = document.getElementById("questionText");
-const yesButton = document.getElementById("yesButton");
-const noButton = document.getElementById("noButton");
-const toast = document.getElementById("toast");
 
-const audio = document.getElementById("audio");
-const playButton = document.getElementById("playButton");
-const playerProgress = document.getElementById("playerProgress");
-const playerTime = document.getElementById("playerTime");
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+const questionText =
+    document.getElementById("questionText");
+
+const yesButton =
+    document.getElementById("yesButton");
+
+const noButton =
+    document.getElementById("noButton");
+
+const toast =
+    document.getElementById("toast");
+
+const audio =
+    document.getElementById("audio");
+
+const playButton =
+    document.getElementById("playButton");
+
+const playerProgress =
+    document.getElementById("playerProgress");
+
+const playerTime =
+    document.getElementById("playerTime");
+
+const musicGate =
+    document.getElementById("musicGate");
+
+const enterButton =
+    document.getElementById("enterButton");
+
+
+/* =========================================================
+   STATE
+========================================================= */
 
 let noClicks = 0;
-let currentScene = "question";
-let toastTimer = null;
-let musicUnlocked = false;
+
+let currentScene =
+    "question";
+
+let toastTimer =
+    null;
+
+let musicStarted =
+    false;
+
+
+/* =========================================================
+   NO MESSAGES
+========================================================= */
 
 const noMessages = [
+
     "იქნები ჩემი გოგო? ♥",
+
     "სცადე ისევ 😭",
+
     "დარწმუნებული ხარ? 🥺",
+
     "ნამდვილად...? 😭",
+
     "ნუ მიკეთებ ამას...",
+
     "კიდევ ერთი შანსი 🥹",
+
     "კარგი... ბოლო შანსი ❤️"
+
 ];
+
+
+/* =========================================================
+   SCENE NAVIGATION
+========================================================= */
 
 function goToScene(name){
 
-    if(!scenes[name] || name === currentScene) return;
+    if(
+        !scenes[name] ||
+        name === currentScene
+    ){
+        return;
+    }
 
     Object.values(scenes).forEach(scene => {
+
         scene.classList.remove("active");
+
     });
 
     requestAnimationFrame(() => {
+
         scenes[name].classList.add("active");
+
     });
 
-    currentScene = name;
+    currentScene =
+        name;
 
     if(header){
-        header.classList.toggle("hidden", name === "letter");
+
+        header.classList.toggle(
+            "hidden",
+            name === "letter"
+        );
+
     }
+
 }
 
-noButton.addEventListener("click", handleNo);
+
+/* =========================================================
+   NO BUTTON
+========================================================= */
+
+noButton.addEventListener(
+    "click",
+    handleNo
+);
 
 function handleNo(){
 
     noClicks++;
 
-    const index = Math.min(noClicks, noMessages.length - 1);
+    const index =
+        Math.min(
+            noClicks,
+            noMessages.length - 1
+        );
 
-    questionText.innerHTML = noMessages[index];
+    questionText.innerHTML =
+        noMessages[index];
 
-    questionText.classList.remove("bump");
+    questionText.classList.remove(
+        "bump"
+    );
 
     void questionText.offsetWidth;
 
-    questionText.classList.add("bump");
+    questionText.classList.add(
+        "bump"
+    );
+
 
     if(noClicks === 1){
-        yesButton.classList.add("growing");
-        yesButton.style.width = "145px";
-        yesButton.style.height = "62px";
+
+        yesButton.classList.add(
+            "growing"
+        );
+
+        yesButton.style.width =
+            "145px";
+
+        yesButton.style.height =
+            "62px";
+
     }
+
 
     if(noClicks === 2){
-        yesButton.style.width = "180px";
-        yesButton.style.height = "70px";
+
+        yesButton.style.width =
+            "180px";
+
+        yesButton.style.height =
+            "70px";
+
     }
+
 
     if(noClicks === 3){
-        yesButton.style.width = "220px";
-        yesButton.style.height = "78px";
+
+        yesButton.style.width =
+            "220px";
+
+        yesButton.style.height =
+            "78px";
+
     }
+
 
     if(noClicks === 4){
-        yesButton.style.width = "260px";
-        yesButton.style.height = "86px";
+
+        yesButton.style.width =
+            "260px";
+
+        yesButton.style.height =
+            "86px";
+
     }
 
+
     if(noClicks === 5){
-        yesButton.style.width = "300px";
-        yesButton.style.height = "96px";
+
+        yesButton.style.width =
+            "300px";
+
+        yesButton.style.height =
+            "96px";
+
     }
+
 
     if(noClicks >= 6){
 
-        yesButton.classList.add("huge");
+        yesButton.classList.add(
+            "huge"
+        );
 
-        noButton.classList.add("mini");
+        noButton.classList.add(
+            "mini"
+        );
 
         createParticles(24);
 
-        showToast("მხოლოდ ერთი სწორი პასუხია ❤️");
+        showToast(
+            "მხოლოდ ერთი სწორი პასუხია ❤️"
+        );
+
     }
+
 }
 
-yesButton.addEventListener("click", accept);
+
+/* =========================================================
+   YES
+========================================================= */
+
+yesButton.addEventListener(
+    "click",
+    accept
+);
 
 function accept(){
 
     createParticles(45);
 
-    yesButton.disabled = true;
-    noButton.disabled = true;
+    yesButton.disabled =
+        true;
+
+    noButton.disabled =
+        true;
 
     setTimeout(() => {
 
         goToScene("gifts");
 
-        yesButton.disabled = false;
-        noButton.disabled = false;
+        yesButton.disabled =
+            false;
+
+        noButton.disabled =
+            false;
 
     },450);
+
 }
-
-document.getElementById("gift1").addEventListener("click", () => {
-
-    createParticles(18);
-
-    goToScene("memories");
-
-});
-
-document.getElementById("gift2").addEventListener("click", () => {
-
-    createParticles(18);
-    goToScene("music");
-
-});
-
-document.getElementById("gift3").addEventListener("click", () => {
-
-    createParticles(18);
-
-    goToScene("letter");
-
-});
-
-document.getElementById("memoryBack").addEventListener("click", () => {
-    goToScene("gifts");
-});
-
-document.getElementById("musicBack").addEventListener("click", () => {
-    goToScene("gifts");
-});
-
-document.getElementById("letterBack").addEventListener("click", () => {
-    goToScene("gifts");
-});
 
 
 /* =========================================================
-   MUSIC SYSTEM
-   iPhone / Safari compatible
-   IMPORTANT:
-   iOS Safari does NOT allow audible autoplay when a page is
-   opened from a link without a user gesture. We therefore:
-   1) try autoplay immediately;
-   2) try again on the first touch/click;
-   3) also start music directly from the site's buttons.
+   GIFTS
 ========================================================= */
 
-audio.volume = 1.0;
-audio.muted = false;
+document
+    .getElementById("gift1")
+    .addEventListener("click",() => {
 
-let musicStarted = false;
-let musicAttempted = false;
+        createParticles(18);
 
-function setMusicPlayingUI(playing){
-    document.body.classList.toggle("music-playing", playing);
-    if(playButton) playButton.textContent = playing ? "Ⅱ" : "▶";
-}
+        goToScene("memories");
 
-function startMusic(){
-    if(!audio) return Promise.reject(new Error("Audio element not found"));
+    });
 
-    audio.volume = 1.0;
-    audio.muted = false;
 
-    const promise = audio.play();
+document
+    .getElementById("gift2")
+    .addEventListener("click",() => {
 
-    if(promise !== undefined){
-        return promise.then(() => {
-            musicStarted = true;
-            musicUnlocked = true;
-            setMusicPlayingUI(true);
-            removeMusicUnlockListeners();
-        });
-    }
+        createParticles(18);
 
-    musicStarted = true;
-    musicUnlocked = true;
-    setMusicPlayingUI(true);
-    removeMusicUnlockListeners();
-    return Promise.resolve();
-}
-
-function tryStartMusic(showError = false){
-    if(!audio) return;
-
-    musicAttempted = true;
-
-    startMusic().catch(error => {
-        console.log(
-            "Music autoplay/user-gesture attempt:",
-            error.name,
-            error.message
-        );
+        goToScene("music");
 
         /*
-         * On iPhone this normally means Safari's autoplay policy
-         * requires a real user interaction. The next touch/click
-         * will call startMusic() again.
+         * მუსიკა უკვე შესვლისას ჩაირთო,
+         * ამიტომ აქ ხელახლა გაშვება აღარ გვჭირდება.
          */
-        if(showError){
-            showToast("ერთხელ შეეხე ეკრანს და მუსიკა ჩაირთვება");
-        }
+
     });
-}
 
-function unlockMusic(){
-    if(musicStarted){
-        removeMusicUnlockListeners();
-        return;
-    }
 
-    tryStartMusic(false);
-}
+document
+    .getElementById("gift3")
+    .addEventListener("click",() => {
 
-function removeMusicUnlockListeners(){
-    document.removeEventListener("touchstart", unlockMusic, true);
-    document.removeEventListener("touchend", unlockMusic, true);
-    document.removeEventListener("pointerdown", unlockMusic, true);
-    document.removeEventListener("click", unlockMusic, true);
-}
+        createParticles(18);
+
+        goToScene("letter");
+
+    });
+
+
+/* =========================================================
+   BACK BUTTONS
+========================================================= */
+
+document
+    .getElementById("memoryBack")
+    .addEventListener("click",() => {
+
+        goToScene("gifts");
+
+    });
+
+
+document
+    .getElementById("musicBack")
+    .addEventListener("click",() => {
+
+        goToScene("gifts");
+
+    });
+
+
+document
+    .getElementById("letterBack")
+    .addEventListener("click",() => {
+
+        goToScene("gifts");
+
+    });
+
+
+/* =========================================================
+   MUSIC
+   iPhone / Safari USER-GESTURE SYSTEM
+========================================================= */
+
+audio.preload =
+    "auto";
+
+audio.volume =
+    1;
+
+audio.muted =
+    false;
+
 
 /*
- * FIRST TOUCH:
- * This is the important iPhone fallback. Safari allows audio
- * started from a genuine user gesture.
+ * ეს არის მთავარი ნაწილი.
+ *
+ * audio.play() პირდაპირ გამოძახებულია
+ * "შესვლა" ღილაკის click event-იდან.
+ *
+ * iPhone Safari-სთვის ეს არის რეალური
+ * user gesture.
  */
-document.addEventListener(
-    "touchstart",
-    unlockMusic,
-    {passive:true,capture:true}
-);
 
-document.addEventListener(
-    "touchend",
-    unlockMusic,
-    {passive:true,capture:true}
-);
+async function enterSite(){
 
-document.addEventListener(
-    "pointerdown",
-    unlockMusic,
-    {passive:true,capture:true}
-);
+    try{
 
-document.addEventListener(
+        audio.currentTime =
+            0;
+
+        audio.volume =
+            1;
+
+        audio.muted =
+            false;
+
+        await audio.play();
+
+        musicStarted =
+            true;
+
+        document.body.classList.add(
+            "music-playing"
+        );
+
+        setMusicPlayingUI(
+            true
+        );
+
+        musicGate.classList.add(
+            "hidden"
+        );
+
+    }catch(error){
+
+        /*
+         * მომხმარებელს შეცდომას აღარ ვაჩვენებთ.
+         *
+         * Safari-ს თუ ამ მომენტში მაინც არ
+         * გაუშვია, შემდეგ დაჭერაზე თავიდან
+         * ვცდით.
+         */
+
+        console.log(
+            "Safari audio:",
+            error
+        );
+
+    }
+
+}
+
+
+enterButton.addEventListener(
     "click",
-    unlockMusic,
-    {capture:true}
+    enterSite
 );
 
-/*
- * Try real autoplay immediately.
- * It can work on some browsers/settings, but iPhone Safari
- * may reject audible autoplay until the user interacts.
- */
-window.addEventListener("load", () => {
-    setTimeout(() => {
-        tryStartMusic(false);
-    }, 100);
-});
 
-/*
- * START MUSIC DIRECTLY FROM THE MAIN YES BUTTON.
- * This is a real user gesture on iPhone.
- */
-function startMusicFromUserGesture(){
-    if(musicStarted) return;
+/* =========================================================
+   AUDIO PLAY EVENT
+========================================================= */
 
-    startMusic().catch(error => {
-        console.log("User gesture music start failed:", error.name, error.message);
-    });
-}
+audio.addEventListener(
+    "play",
+    () => {
 
-yesButton.addEventListener("click", startMusicFromUserGesture, {capture:true});
-noButton.addEventListener("click", startMusicFromUserGesture, {capture:true});
+        musicStarted =
+            true;
 
-/*
- * When the user opens the music scene, try again.
- */
-document.getElementById("gift2").addEventListener("click", () => {
-    if(!musicStarted){
-        startMusicFromUserGesture();
+        document.body.classList.add(
+            "music-playing"
+        );
+
+        setMusicPlayingUI(
+            true
+        );
+
     }
-}, {capture:true});
+);
 
-/*
- * Play / Pause button.
- */
-playButton.addEventListener("click", function(event){
-    event.stopPropagation();
 
-    if(audio.paused){
-        startMusic().catch(error => {
-            console.log(
-                "Manual music play failed:",
-                error.name,
-                error.message
+/* =========================================================
+   AUDIO PAUSE
+========================================================= */
+
+audio.addEventListener(
+    "pause",
+    () => {
+
+        if(!audio.ended){
+
+            document.body.classList.remove(
+                "music-playing"
             );
 
-            showToast("მუსიკის ჩართვა ვერ მოხერხდა");
-        });
-    }else{
-        audio.pause();
-        setMusicPlayingUI(false);
+            setMusicPlayingUI(
+                false
+            );
+
+        }
+
     }
-});
+);
 
-/*
- * Audio loading error.
- */
-audio.addEventListener("error", () => {
-    console.log("Audio error:", audio.error);
-    showToast("song.mp3 ვერ ჩაიტვირთა");
-});
 
-audio.addEventListener("canplay", () => {
-    console.log("song.mp3 მზად არის");
-});
+/* =========================================================
+   PLAY / PAUSE
+========================================================= */
 
-audio.addEventListener("play", () => {
-    musicStarted = true;
-    musicUnlocked = true;
-    setMusicPlayingUI(true);
-});
+playButton.addEventListener(
+    "click",
+    async event => {
 
-audio.addEventListener("pause", () => {
-    if(!audio.ended){
-        setMusicPlayingUI(false);
+        event.stopPropagation();
+
+        if(audio.paused){
+
+            try{
+
+                await audio.play();
+
+            }catch(error){
+
+                /*
+                 * აქაც მომხმარებლისთვის
+                 * შეცდომის ტექსტს არ ვაჩვენებთ.
+                 */
+
+                console.log(
+                    "Audio play:",
+                    error
+                );
+
+            }
+
+        }else{
+
+            audio.pause();
+
+        }
+
     }
-});
+);
 
-audio.addEventListener("loadedmetadata", () => {
-    if(audio.duration && isFinite(audio.duration)){
-        playerTime.textContent = "0:00";
+
+/* =========================================================
+   MUSIC UI
+========================================================= */
+
+function setMusicPlayingUI(
+    playing
+){
+
+    document.body.classList.toggle(
+        "music-playing",
+        playing
+    );
+
+    if(playButton){
+
+        playButton.textContent =
+            playing
+                ? "Ⅱ"
+                : "▶";
+
     }
-});
 
-audio.addEventListener("timeupdate", () => {
-    if(!audio.duration || !isFinite(audio.duration)) return;
+}
 
-    const percent =
-        (audio.currentTime / audio.duration) * 100;
 
-    playerProgress.style.width = `${percent}%`;
-    playerTime.textContent = formatTime(audio.currentTime);
-});
+/* =========================================================
+   LOADED METADATA
+========================================================= */
 
-audio.addEventListener("ended", () => {
-    setMusicPlayingUI(false);
-    playerProgress.style.width = "0%";
-    playerTime.textContent = "0:00";
-});
+audio.addEventListener(
+    "loadedmetadata",
+    () => {
+
+        if(
+            audio.duration &&
+            isFinite(audio.duration)
+        ){
+
+            playerTime.textContent =
+                "0:00";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   TIME UPDATE
+========================================================= */
+
+audio.addEventListener(
+    "timeupdate",
+    () => {
+
+        if(
+            !audio.duration ||
+            !isFinite(audio.duration)
+        ){
+
+            return;
+
+        }
+
+        const percent =
+            (
+                audio.currentTime /
+                audio.duration
+            ) * 100;
+
+
+        playerProgress.style.width =
+            `${percent}%`;
+
+
+        playerTime.textContent =
+            formatTime(
+                audio.currentTime
+            );
+
+    }
+);
+
+
+/* =========================================================
+   AUDIO ENDED
+========================================================= */
+
+audio.addEventListener(
+    "ended",
+    () => {
+
+        setMusicPlayingUI(
+            false
+        );
+
+        playerProgress.style.width =
+            "0%";
+
+        playerTime.textContent =
+            "0:00";
+
+    }
+);
+
+
+/* =========================================================
+   FORMAT TIME
+========================================================= */
 
 function formatTime(seconds){
-    if(!isFinite(seconds) || seconds < 0){
+
+    if(
+        !isFinite(seconds) ||
+        seconds < 0
+    ){
+
         return "0:00";
+
     }
 
-    const minutes = Math.floor(seconds / 60);
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
 
-    const secs = Math.floor(seconds % 60)
+    const secs =
+        Math.floor(
+            seconds % 60
+        )
         .toString()
         .padStart(2,"0");
 
     return `${minutes}:${secs}`;
+
 }
 
 
@@ -1391,65 +3142,104 @@ function formatTime(seconds){
 
 function createParticles(amount){
 
-    const symbols = ["♥","♡","✦","•"];
+    const symbols =
+        [
+            "♥",
+            "♡",
+            "✦",
+            "•"
+        ];
 
-    for(let i = 0; i < amount; i++){
+
+    for(
+        let i = 0;
+        i < amount;
+        i++
+    ){
 
         const particle =
             document.createElement("div");
 
-        particle.className = "particle";
+        particle.className =
+            "particle";
+
 
         particle.textContent =
             symbols[
                 Math.floor(
-                    Math.random() * symbols.length
+                    Math.random() *
+                    symbols.length
                 )
             ];
 
+
         const angle =
-            Math.random() * Math.PI * 2;
+            Math.random() *
+            Math.PI *
+            2;
+
 
         const distance =
-            90 + Math.random() * 260;
+            90 +
+            Math.random() *
+            260;
+
 
         const x =
-            Math.cos(angle) * distance;
+            Math.cos(angle) *
+            distance;
+
 
         const y =
-            Math.sin(angle) * distance;
+            Math.sin(angle) *
+            distance;
+
 
         const rotation =
-            -180 + Math.random() * 360;
+            -180 +
+            Math.random() *
+            360;
+
 
         particle.style.setProperty(
             "--x",
             `${x}px`
         );
 
+
         particle.style.setProperty(
             "--y",
             `${y}px`
         );
+
 
         particle.style.setProperty(
             "--r",
             `${rotation}deg`
         );
 
+
         particle.style.fontSize =
             `${8 + Math.random() * 13}px`;
+
 
         particle.style.color =
             Math.random() > .45
                 ? "#B94B67"
                 : "#2E2420";
 
-        document.body.appendChild(particle);
 
-        setTimeout(() => {
-            particle.remove();
-        },1400);
+        document.body.appendChild(
+            particle
+        );
+
+
+        setTimeout(
+            () => {
+                particle.remove();
+            },
+            1400
+        );
 
     }
 
@@ -1462,18 +3252,28 @@ function createParticles(amount){
 
 function showToast(message){
 
-    clearTimeout(toastTimer);
+    clearTimeout(
+        toastTimer
+    );
 
-    toast.textContent = message;
+    toast.textContent =
+        message;
 
-    toast.classList.add("show");
+    toast.classList.add(
+        "show"
+    );
 
     toastTimer =
-        setTimeout(() => {
+        setTimeout(
+            () => {
 
-            toast.classList.remove("show");
+                toast.classList.remove(
+                    "show"
+                );
 
-        },2200);
+            },
+            2200
+        );
 
 }
 
@@ -1482,8 +3282,12 @@ function showToast(message){
    SWIPE
 ========================================================= */
 
-let touchStartX = 0;
-let touchStartY = 0;
+let touchStartX =
+    0;
+
+let touchStartY =
+    0;
+
 
 document.addEventListener(
     "touchstart",
@@ -1504,6 +3308,7 @@ document.addEventListener(
     }
 );
 
+
 document.addEventListener(
     "touchend",
     event => {
@@ -1512,17 +3317,23 @@ document.addEventListener(
             event.changedTouches[0];
 
         const dx =
-            touch.clientX - touchStartX;
+            touch.clientX -
+            touchStartX;
 
         const dy =
-            touch.clientY - touchStartY;
+            touch.clientY -
+            touchStartY;
+
 
         if(
             Math.abs(dx) < 80 ||
             Math.abs(dx) < Math.abs(dy)
         ){
+
             return;
+
         }
+
 
         if(
             currentScene === "memories" ||
@@ -1530,7 +3341,9 @@ document.addEventListener(
             currentScene === "letter"
         ){
 
-            goToScene("gifts");
+            goToScene(
+                "gifts"
+            );
 
         }
 
@@ -1553,14 +3366,21 @@ document.addEventListener(
             event.key === "Enter" &&
             currentScene === "question"
         ){
+
             accept();
+
         }
+
 
         if(
             event.key === "Escape" &&
             currentScene !== "question"
         ){
-            goToScene("gifts");
+
+            goToScene(
+                "gifts"
+            );
+
         }
 
     }
@@ -1578,12 +3398,14 @@ document.addEventListener(
     "memory4.jpg",
     "memory5.jpg",
     "memory6.jpg"
+
 ].forEach(src => {
 
     const image =
         new Image();
 
-    image.src = src;
+    image.src =
+        src;
 
 });
 
@@ -1592,7 +3414,39 @@ document.addEventListener(
    INITIAL STATE
 ========================================================= */
 
-document.body.classList.remove("music-playing");
+document.body.classList.remove(
+    "music-playing"
+);
+
+
+/* =========================================================
+   AUDIO DEBUG ONLY
+   მომხმარებელი ამას ვერ ხედავს
+========================================================= */
+
+audio.addEventListener(
+    "canplay",
+    () => {
+
+        console.log(
+            "song.mp3 მზად არის"
+        );
+
+    }
+);
+
+
+audio.addEventListener(
+    "error",
+    () => {
+
+        console.log(
+            "Audio asset error:",
+            audio.error
+        );
+
+    }
+);
 
 
 /* =========================================================
@@ -1626,3 +3480,4 @@ window.addEventListener(
 
 </body>
 </html>
+
