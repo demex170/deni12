@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="ka">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>პატარა, სარისკო რამ</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Georgian:wght@400;500;600;700&family=Noto+Sans+Georgian:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+html{width:100%;min-height:100%;background:#231A17;scroll-behavior:smooth;}
+
+body{
+    width:100%;min-height:100svh;overflow:hidden;
+    background:#FBF2E6;color:#2E2420;
+    font-family:"Noto Sans Georgian",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+}
+
+button{appearance:none;-webkit-appearance:none;border:0;outline:0;font:inherit;cursor:pointer;user-select:none;-webkit-user-select:none;background:none;}
+img{display:block;max-width:100%;}
+
+:root{
+    --paper:#FBF2E6;
+    --paper-deep:#F2E2CC;
+    --ink:#2E2420;
+    --ink-soft:#6B5C52;
+    --rose:#B94B67;
+    --rose-deep:#8A3450;
+    --rose-soft:#E3AAB4;
+    --rust:#C67C46;
+    --moss:#69795C;
+    --white:#FFFDF8;
+    --ease:cubic-bezier(.22,.8,.22,1);
+}
+
+/* ========================================================= APP */
+
+.app{
+    position:relative;width:100%;height:100svh;overflow:hidden;
+    background:
+        radial-gradient(circle at 18% 8%, rgba(185,75,103,.05), transparent 45%),
+        radial-gradient(circle at 85% 92%, rgba(198,124,70,.06), transparent 50%),
+        var(--paper);
+}
+
+/* ========================================================= HEADER */
+
+.header{
+    position:absolute;top:0;left:0;width:100%;
+    padding:calc(env(safe-area-inset-top,0px) + 22px) 22px 20px;
+    z-index:100;
+    background:
+        linear-gradient(180deg, rgba(251,242,230,1) 55%, rgba(251,242,230,0));
+    text-align:center;
+    opacity:1;visibility:visible;pointer-events:auto;
+    transition:opacity .35s var(--ease), visibility 0s linear 0s;
+}
+
+.header.hidden{
+    opacity:0;visibility:hidden;pointer-events:none;
+    transition:opacity .3s var(--ease), visibility 0s linear .3s;
+}
+
+.eyebrow{
+    color:var(--rust);
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.02em;
+}
+
+.header-title{
+    color:var(--ink);
+    font-family:"Noto Serif Georgian",Georgia,serif;
+    
+    font-weight:500;
+    font-size:clamp(21px,5.4vw,30px);
+    letter-spacing:-.01em;
+    margin-top:2px;
+}
+
+/* ========================================================= SCENE */
+
+.scene{
+    position:absolute;left:0;top:0;width:100%;height:100%;
+    display:flex;align-items:center;justify-content:center;
+    padding:118px 22px 40px;
+
+    opacity:0;visibility:hidden;pointer-events:none;
+    transform:translate3d(0,18px,0) scale(.985);
+    transition:opacity .5s var(--ease), transform .65s var(--ease), visibility 0s linear .65s;
+}
+
+.scene.active{
+    opacity:1;visibility:visible;pointer-events:auto;
+    transform:translate3d(0,0,0) scale(1);
+    transition:opacity .5s var(--ease), transform .65s var(--ease), visibility 0s;
+}
+
+/* ========================================================= QUESTION */
+
+.question-wrap{width:min(560px,100%);display:flex;flex-direction:column;align-items:center;text-align:center;}
+
+.character{
+    width:clamp(120px,30vw,168px);
+    height:clamp(102px,25vw,140px);
+    position:relative;margin-bottom:clamp(10px,3vw,20px);
+}
+
+.character .ear{position:absolute;width:26%;height:33%;top:3%;background:var(--paper);border:3px solid var(--ink);}
+.character .ear.left{left:22%;transform:rotate(-26deg) skew(-6deg);border-radius:70% 20% 40% 20%;}
+.character .ear.right{right:22%;transform:rotate(26deg) skew(6deg);border-radius:20% 70% 20% 40%;}
+
+.character .head{
+    position:absolute;left:50%;top:19%;width:58%;height:57%;transform:translateX(-50%);
+    background:var(--white);border:3px solid var(--ink);border-radius:44% 46% 48% 44%;z-index:2;
+}
+
+.character .eye{position:absolute;width:8.5%;height:12%;top:39%;border-radius:50%;background:var(--ink);}
+.character .eye.left{left:28%;}
+.character .eye.right{right:28%;}
+
+.character .nose{position:absolute;left:50%;top:53%;width:7%;height:5.5%;transform:translateX(-50%);background:var(--rose-deep);border-radius:50%;}
+
+.character .mouth{position:absolute;left:50%;top:57%;width:15%;height:9%;transform:translateX(-50%);border-bottom:2.5px solid var(--ink);border-radius:0 0 50% 50%;}
+
+.character .cheek{position:absolute;width:12%;height:7%;top:55%;border-radius:50%;background:var(--rose-soft);opacity:.8;}
+.character .cheek.left{left:13%;}
+.character .cheek.right{right:13%;}
+
+.thought{position:absolute;border:2.5px solid var(--ink);border-radius:50%;opacity:.7;}
+.thought.t1{width:11px;height:11px;right:16%;top:8%;}
+.thought.t2{width:17px;height:17px;right:7%;top:0;}
+.thought.t3{width:24px;height:24px;right:-2%;top:-10%;}
+
+.question-text{
+    min-height:34px;margin-bottom:26px;color:var(--rose-deep);
+    font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;
+    font-size:clamp(19px,5vw,29px);letter-spacing:-.01em;
+    transition:opacity .25s ease;
+}
+
+.question-text.bump{animation:textBump .42s var(--ease);}
+@keyframes textBump{0%{transform:scale(1);}45%{transform:scale(1.06);}100%{transform:scale(1);}}
+
+.heart{color:var(--rose);display:inline-block;animation:heartBeat 1.8s ease-in-out infinite;}
+@keyframes heartBeat{0%,100%{transform:scale(1);}8%{transform:scale(1.16);}16%{transform:scale(1);}24%{transform:scale(1.1);}32%{transform:scale(1);}}
+
+.action-row{width:100%;display:flex;justify-content:center;align-items:center;gap:clamp(16px,4.5vw,36px);min-height:86px;}
+
+.action{
+    position:relative;min-width:110px;height:56px;border-radius:14px;
+    font-size:16.5px;font-weight:600;letter-spacing:-.005em;
+    transition:width .65s var(--ease),height .65s var(--ease),transform .2s var(--ease),box-shadow .25s ease,opacity .3s ease,border-radius .5s var(--ease);
+}
+.action:active{transform:scale(.94);}
+
+.yes{
+    color:var(--white);
+    background:linear-gradient(180deg,#C25E79,var(--rose-deep));
+    box-shadow:0 10px 24px rgba(138,52,80,.22);
+}
+
+.no{
+    color:var(--ink-soft);
+    background:transparent;
+    border:1.5px solid rgba(46,36,32,.18);
+}
+.no:hover{border-color:rgba(46,36,32,.32);}
+
+.yes.growing{min-width:145px;}
+.yes.huge{
+    width:min(360px,80vw);height:110px;border-radius:22px;
+    font-size:clamp(28px,7.5vw,44px);
+    font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;
+    box-shadow:0 18px 42px rgba(138,52,80,.28);
+}
+.no.mini{width:10px;min-width:10px;height:10px;padding:0;border-radius:3px;font-size:0;opacity:.5;}
+
+/* ========================================================= GIFTS / KEEPSAKES */
+
+.success-wrap{width:min(640px,100%);display:flex;flex-direction:column;align-items:center;text-align:center;}
+
+.success-title{
+    color:var(--rose-deep);font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;
+    font-size:clamp(20px,5vw,29px);letter-spacing:-.01em;margin-bottom:4px;
+}
+.success-title .heart{font-family:"Noto Sans Georgian",sans-serif;font-style:normal;}
+
+.kiss-character{width:145px;height:120px;position:relative;margin:2px auto 6px;animation:gentleFloat 4s ease-in-out infinite;}
+@keyframes gentleFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+
+.kiss-character .ear{position:absolute;top:16px;width:31px;height:34px;border:3.5px solid var(--ink);background:var(--white);border-radius:50%;}
+.kiss-character .ear.left{left:30px;}
+.kiss-character .ear.right{right:30px;}
+.kiss-character .head{position:absolute;left:50%;top:25px;width:85px;height:72px;transform:translateX(-50%);background:var(--white);border:3.5px solid var(--ink);border-radius:48% 52% 45% 50%;}
+.kiss-eye{position:absolute;width:11px;height:14px;top:52px;background:var(--ink);border-radius:50%;}
+.kiss-eye.left{left:47px;}
+.kiss-eye.right{right:47px;}
+.kiss-mouth{position:absolute;left:50%;top:64px;width:26px;height:15px;transform:translateX(-50%);border-bottom:3.5px solid var(--ink);border-radius:0 0 60% 60%;}
+.kiss-mark{position:absolute;right:16px;top:32px;color:var(--rose);font-size:34px;transform:rotate(-12deg);}
+
+.keepsakes{display:flex;justify-content:center;align-items:stretch;gap:clamp(12px,4vw,20px);margin-top:14px;width:100%;}
+
+.gift{
+    flex:1;max-width:150px;
+    padding:22px 12px 16px;
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+    background:var(--white);
+    border:1px solid rgba(46,36,32,.08);
+    border-radius:16px;
+    box-shadow:0 10px 26px rgba(138,52,80,.08);
+    transition:transform .3s var(--ease),box-shadow .3s ease,border-color .3s ease;
+}
+.gift:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(138,52,80,.14);border-color:rgba(185,75,103,.25);}
+
+/* gift-box icon, shared shape across all three keepsakes, tinted per card via --accent */
+.icon-giftbox{width:46px;height:44px;position:relative;margin:10px auto 6px;}
+
+.icon-giftbox .box-lid{
+    position:absolute;left:0;top:14px;width:100%;height:9px;
+    background:var(--white);border:2px solid var(--ink);border-radius:3px;
+}
+
+.icon-giftbox .box-body{
+    position:absolute;left:2px;top:22px;width:calc(100% - 4px);height:20px;
+    background:var(--paper-deep);border:2px solid var(--ink);border-top:0;border-radius:0 0 3px 3px;
+}
+
+.icon-giftbox .ribbon-v{
+    position:absolute;left:50%;top:14px;width:7px;height:28px;
+    transform:translateX(-50%);background:var(--accent);opacity:.85;
+}
+
+.icon-giftbox .bow-knot{
+    position:absolute;left:50%;top:10px;width:8px;height:8px;
+    transform:translate(-50%,-50%);background:var(--accent);border-radius:50%;
+}
+
+.icon-giftbox .bow-loop{
+    position:absolute;top:2px;width:15px;height:13px;
+    border:2.5px solid var(--accent);border-radius:70% 30% 70% 30%;
+}
+.icon-giftbox .bow-loop.left{left:8px;transform:rotate(-18deg);}
+.icon-giftbox .bow-loop.right{right:8px;transform:rotate(18deg) scaleX(-1);}
+
+.gift-label{color:var(--ink);font-size:14px;font-weight:600;letter-spacing:-.005em;}
+.gift-sub{color:var(--ink-soft);font-size:12px;line-height:1.35;}
+
+/* ========================================================= MEMORIES */
+
+.memory-wrap{width:min(720px,100%);display:flex;flex-direction:column;align-items:center;text-align:center;overflow:auto;max-height:100%;padding:4px 0 20px;scrollbar-width:none;}
+.memory-wrap::-webkit-scrollbar{display:none;}
+
+.memory-title{
+    color:var(--rose-deep);font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;
+    font-size:clamp(19px,4.8vw,26px);margin-bottom:18px;
+}
+
+.memory-board{width:100%;display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(10px,3vw,18px);margin-bottom:20px;}
+
+.memory-photo{
+    aspect-ratio:1/1.12;background:var(--white);border:7px solid var(--white);
+    box-shadow:0 8px 20px rgba(46,36,32,.12);overflow:hidden;
+    transform:rotate(var(--rot));transition:transform .4s var(--ease),box-shadow .4s ease;
+}
+.memory-photo:nth-child(1){--rot:-3deg;}
+.memory-photo:nth-child(2){--rot:2deg;}
+.memory-photo:nth-child(3){--rot:-1.5deg;}
+.memory-photo:nth-child(4){--rot:2.5deg;}
+.memory-photo:nth-child(5){--rot:-2deg;}
+.memory-photo:nth-child(6){--rot:1.5deg;}
+.memory-photo:hover{transform:rotate(0) translateY(-5px) scale(1.03);box-shadow:0 14px 28px rgba(46,36,32,.16);}
+
+.memory-photo img{width:100%;height:100%;object-fit:cover;background:linear-gradient(150deg,var(--paper-deep),#e6d3b8);}
+
+.memory-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(150deg,var(--paper-deep),#e6d3b8);color:var(--rose-soft);font-size:22px;}
+
+.back-button{
+    min-width:132px;height:42px;padding:0 20px;border-radius:10px;
+    background:transparent;border:1.5px solid rgba(46,36,32,.18);
+    color:var(--ink-soft);font-size:13.5px;font-weight:600;
+    transition:border-color .25s ease,color .25s ease;
+}
+.back-button:hover{border-color:var(--rose);color:var(--rose-deep);}
+
+/* ========================================================= MUSIC */
+
+.music-wrap{width:min(760px,100%);display:grid;grid-template-columns:minmax(160px,.72fr) minmax(250px,1.28fr);gap:clamp(12px,3vw,22px);align-items:stretch;}
+
+.vinyl-card{
+    min-height:270px;border-radius:18px;
+    background:linear-gradient(150deg,var(--paper-deep),#e9d6ba);
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 10px 30px rgba(138,52,80,.1);overflow:hidden;
+}
+
+.vinyl{
+    width:clamp(135px,25vw,200px);aspect-ratio:1;border-radius:50%;position:relative;
+    background:repeating-radial-gradient(circle at center,#241A16 0 2px,#2E2119 2px 4px,#1E1512 4px 6px);
+    box-shadow:0 14px 32px rgba(0,0,0,.25);
+    animation:vinylSpin 7s linear infinite;animation-play-state:paused;
+}
+.music-playing .vinyl{animation-play-state:running;}
+@keyframes vinylSpin{to{transform:rotate(360deg);}}
+
+.vinyl-center{position:absolute;left:50%;top:50%;width:30%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,var(--white) 0 7%,var(--rose-soft) 8% 100%);box-shadow:inset 0 0 0 3px rgba(255,255,255,.3);}
+.vinyl-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);color:var(--rose-deep);font-size:9.5px;font-weight:700;letter-spacing:.5px;}
+
+.track-card{
+    min-height:270px;padding:clamp(18px,4vw,26px);border-radius:18px;
+    background:var(--white);border:1px solid rgba(46,36,32,.07);
+    box-shadow:0 10px 30px rgba(46,36,32,.07);
+    display:flex;flex-direction:column;justify-content:center;
+}
+
+.track-subtitle{color:var(--ink-soft);font-family:"Noto Serif Georgian",Georgia,serif;font-size:clamp(14px,3.3vw,18px);font-weight:500;margin-bottom:8px;}
+.track-title{color:var(--ink);font-family:"Noto Serif Georgian",Georgia,serif;font-size:clamp(26px,6.5vw,42px);line-height:1;font-weight:600;letter-spacing:-.02em;margin-bottom:4px;}
+.track-artist{color:var(--rose);font-size:13px;font-weight:600;margin-bottom:22px;}
+
+.player{height:58px;border-radius:13px;background:linear-gradient(180deg,#C25E79,var(--rose-deep));padding:10px 12px;display:flex;align-items:center;gap:12px;box-shadow:0 8px 20px rgba(138,52,80,.2);}
+
+.play-button{width:38px;height:38px;flex:0 0 38px;border-radius:50%;background:var(--white);color:var(--rose-deep);display:flex;align-items:center;justify-content:center;font-size:13px;transition:transform .2s ease;}
+.play-button:active{transform:scale(.9);}
+
+.player-line{flex:1;height:4px;border-radius:99px;background:rgba(255,255,255,.3);overflow:hidden;position:relative;}
+.player-progress{position:absolute;left:0;top:0;width:0%;height:100%;background:var(--white);border-radius:99px;}
+.player-time{min-width:34px;text-align:right;color:var(--white);font-size:10px;font-weight:700;}
+
+.music-back{align-self:flex-start;margin-top:18px;}
+
+/* ========================================================= LETTER */
+
+#sceneLetter{padding-top:40px;transition:opacity .5s var(--ease), transform .65s var(--ease), visibility 0s linear .65s, padding-top .4s var(--ease);}
+
+.letter-wrap{width:min(620px,100%);max-height:100%;overflow:auto;scrollbar-width:none;padding:4px 4px 25px;}
+.letter-wrap::-webkit-scrollbar{display:none;}
+
+.letter-paper{
+    position:relative;background:var(--white);border:1px solid rgba(46,36,32,.07);
+    box-shadow:0 16px 48px rgba(46,36,32,.14);
+    padding:clamp(28px,6vw,46px);overflow:hidden;border-radius:4px;
+}
+.letter-paper::before{content:"";position:absolute;left:0;top:0;width:5px;height:100%;background:linear-gradient(180deg,var(--rose),var(--rust));}
+
+.kiss-decoration{position:absolute;color:var(--rose);opacity:.7;pointer-events:none;}
+.kiss-decoration.k1{top:14px;right:22px;font-size:30px;transform:rotate(12deg);}
+.kiss-decoration.k2{bottom:20px;left:14px;font-size:22px;transform:rotate(-12deg);}
+
+.letter-title{color:var(--rose-deep);font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;font-size:clamp(23px,5.5vw,33px);margin-bottom:18px;}
+
+.letter-text{color:var(--ink-soft);font-family:"Noto Serif Georgian",Georgia,serif;font-size:clamp(14.5px,3.4vw,17px);line-height:1.8;}
+.letter-text strong{color:var(--rose-deep);font-weight:600;}
+
+.signature{margin-top:26px;text-align:right;color:var(--rose-deep);font-family:"Noto Serif Georgian",Georgia,serif;font-weight:500;font-size:22px;}
+
+/* ========================================================= PARTICLES */
+
+.particle{position:fixed;left:50%;top:50%;width:7px;height:7px;pointer-events:none;z-index:300;opacity:0;transform:translate(-50%,-50%) scale(.3);animation:particleFly 1.3s var(--ease) forwards;}
+@keyframes particleFly{0%{opacity:1;transform:translate(-50%,-50%) scale(.3) rotate(0);}70%{opacity:1;}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(1) rotate(var(--r));}}
+
+/* ========================================================= TOAST */
+
+.toast{
+    position:fixed;left:50%;bottom:calc(25px + env(safe-area-inset-bottom,0px));z-index:500;
+    padding:11px 17px;border-radius:99px;background:var(--ink);color:var(--white);
+    font-size:12px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);
+    transform:translate(-50%,20px);opacity:0;pointer-events:none;
+    transition:opacity .3s ease,transform .3s var(--ease);
+}
+.toast.show{opacity:1;transform:translate(-50%,0);}
+
+/* ========================================================= RESPONSIVE */
+
+@media(max-width:700px){
+    .header{padding:calc(env(safe-area-inset-top,0px) + 16px) 18px 14px;}
+    .scene{padding:96px 16px 28px;}
+    .music-wrap{grid-template-columns:1fr;}
+    .vinyl-card{min-height:170px;}
+    .track-card{min-height:230px;}
+}
+
+@media(max-width:430px){
+    .header-title{font-size:19px;}
+    .action{min-width:100px;height:52px;}
+    .action-row{gap:16px;}
+    .keepsakes{gap:9px;}
+}
+
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;scroll-behavior:auto !important;}
+}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+    <header class="header">
+        <div class="eyebrow">პატარა, სარისკო რამ</div>
+        <div class="header-title">ერთი შეკითხვა მაქვს შენთვის</div>
+    </header>
+
+    <!-- QUESTION -->
+    <section id="sceneQuestion" class="scene active">
+        <div class="question-wrap">
+            <div id="questionCharacter" class="character">
+                <div class="thought t1"></div>
+                <div class="thought t2"></div>
+                <div class="thought t3"></div>
+                <div class="ear left"></div>
+                <div class="ear right"></div>
+                <div class="head">
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="nose"></div>
+                    <div class="mouth"></div>
+                    <div class="cheek left"></div>
+                    <div class="cheek right"></div>
+                </div>
+            </div>
+
+            <div id="questionText" class="question-text">იქნები ჩემი გოგო? <span class="heart">♥</span></div>
+
+            <div class="action-row">
+                <button id="yesButton" class="action yes" type="button">კი</button>
+                <button id="noButton" class="action no" type="button">არა</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- GIFTS -->
+    <section id="sceneGifts" class="scene">
+        <div class="success-wrap">
+            <div class="success-title">ვიცოდი, რომ თანხმა იქნებოდი <span class="heart">♥</span></div>
+
+            <div class="kiss-character">
+                <div class="ear left"></div>
+                <div class="ear right"></div>
+                <div class="head">
+                    <div class="kiss-eye left"></div>
+                    <div class="kiss-eye right"></div>
+                    <div class="kiss-mouth"></div>
+                </div>
+                <div class="kiss-mark">♥</div>
+            </div>
+
+            <div class="keepsakes">
+                <button class="gift" id="gift1" type="button" aria-label="ჩვენი მოგონებები">
+                    <div class="icon-giftbox" style="--accent:var(--rose-deep)">
+                        <div class="box-lid"></div>
+                        <div class="box-body"></div>
+                        <div class="ribbon-v"></div>
+                        <div class="bow-loop left"></div>
+                        <div class="bow-loop right"></div>
+                        <div class="bow-knot"></div>
+                    </div>
+                    <div class="gift-label">ჩვენი მოგონებები</div>
+                    <div class="gift-sub">რამდენიმე ფოტო, ღირს შენახვა</div>
+                </button>
+
+                <button class="gift" id="gift2" type="button" aria-label="ჩვენი სიმღერა">
+                    <div class="icon-giftbox" style="--accent:var(--rust)">
+                        <div class="box-lid"></div>
+                        <div class="box-body"></div>
+                        <div class="ribbon-v"></div>
+                        <div class="bow-loop left"></div>
+                        <div class="bow-loop right"></div>
+                        <div class="bow-knot"></div>
+                    </div>
+                    <div class="gift-label">ჩვენი სიმღერა</div>
+                    <div class="gift-sub">ის, რაც შენ და ჩემზე მაგონებს</div>
+                </button>
+
+                <button class="gift" id="gift3" type="button" aria-label="წერილი">
+                    <div class="icon-giftbox" style="--accent:var(--moss)">
+                        <div class="box-lid"></div>
+                        <div class="box-body"></div>
+                        <div class="ribbon-v"></div>
+                        <div class="bow-loop left"></div>
+                        <div class="bow-loop right"></div>
+                        <div class="bow-knot"></div>
+                    </div>
+                    <div class="gift-label">წერილი</div>
+                    <div class="gift-sub">რამდენიმე სიტყვა შენთვის</div>
+                </button>
+            </div>
+        </div>
+    </section>
+    <!-- MEMORIES -->
+    <section id="sceneMemories" class="scene">
+        <div class="memory-wrap">
+            <div class="memory-title">დამახსოვრებული წამები</div>
+            <div class="memory-board">
+                <div class="memory-photo"><img src="memory1.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="memory-placeholder" style="display:none">♡</div></div>
+                <div class="memory-photo"><img src="memory2.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="memory-placeholder" style="display:none">♡</div></div>
+                <div class="memory-photo"><img src="memory3.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="memory-placeholder" style="display:none">♡</div></div>
+                <div class="memory-photo"><img src="memory4.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="memory-placeholder" style="display:none">♡</div></div>
+                <div class="memory-photo"><img src="memory5.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="memory-placeholder" style="display:none">♡</div></div>
+                <div class="memory-photo"><img src="memory6.jpg" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="memory-placeholder" style="display:none">♡</div></div>
+            </div>
+            <button id="memoryBack" class="back-button" type="button">უკან დაბრუნება</button>
+        </div>
+    </section>
+
+    <!-- MUSIC -->
+    <section id="sceneMusic" class="scene">
+        <div class="music-wrap">
+            <div class="vinyl-card">
+                <div class="vinyl">
+                    <div class="vinyl-center"></div>
+                    <div class="vinyl-label">LOVE</div>
+                </div>
+            </div>
+
+            <div class="track-card">
+                <div class="track-subtitle">სიმღერა, რომელიც შენ და ჩემზე მაგონებს</div>
+                <div class="track-title">Lovesong</div>
+                <div class="track-artist">Adele</div>
+
+                <div class="player">
+                    <button id="playButton" class="play-button" type="button" aria-label="დაკვრა">▶</button>
+                    <div class="player-line"><div id="playerProgress" class="player-progress"></div></div>
+                    <div id="playerTime" class="player-time">0:00</div>
+                </div>
+
+                <button id="musicBack" class="back-button music-back" type="button">უკან დაბრუნება</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- LETTER -->
+    <section id="sceneLetter" class="scene">
+        <div class="letter-wrap">
+            <article class="letter-paper">
+                <div class="kiss-decoration k1">♥</div>
+                <div class="kiss-decoration k2">♥</div>
+
+                <h2 class="letter-title">ძვირფასო,</h2>
+
+                <div class="letter-text">
+                    ვიცი, ეს ცოტა სარისკო იყო...
+                    <br><br>
+                    მაგრამ ხანდახან საუკეთესო რაღაცეები სწორედ პატარა რისკით იწყება.
+                    <br><br>
+                    მინდოდა რაღაც განსაკუთრებული მექნა, უბრალოდ კითხვის დასმის ნაცვლად.
+                    <br><br>
+                    ყოველი პატარა წამი, ყოველი საუბარი, ყოველი სიცილი და ყოველი მოგონება რაღაცაა, რისი შენახვაც მინდა.
+                    <br><br>
+                    ასე რომ... <strong>გმადლობ, რომ თანხმა თქვი.</strong>
+                    <br><br>
+                    იმედი მაქვს, ეს მხოლოდ დასაწყისია იმ მრავალი მოგონებისა, რასაც ერთად შევქმნით.
+                    <br><br>
+                    და თუ ოდესმე გაინტერესებს, ისევ გავიმეორებდი თუ არა ამას ყველაფერს...
+                    <br>
+                    აუცილებლად გავიმეორებდი.
+                </div>
+
+                <div class="signature">სიყვარულით ♡</div>
+            </article>
+
+            <button id="letterBack" class="back-button" style="margin:18px auto 0;display:block;" type="button">უკან დაბრუნება</button>
+        </div>
+    </section>
+
+    <div id="toast" class="toast"></div>
+
+    <audio id="audio" preload="metadata" src="song.mp3"></audio>
+
+</div>
+
+<script>
+
+const scenes = {
+    question: document.getElementById("sceneQuestion"),
+    gifts: document.getElementById("sceneGifts"),
+    memories: document.getElementById("sceneMemories"),
+    music: document.getElementById("sceneMusic"),
+    letter: document.getElementById("sceneLetter")
+};
+
+const header = document.querySelector(".header");
+
+const questionText = document.getElementById("questionText");
+const yesButton = document.getElementById("yesButton");
+const noButton = document.getElementById("noButton");
+const toast = document.getElementById("toast");
+const audio = document.getElementById("audio");
+const playButton = document.getElementById("playButton");
+const playerProgress = document.getElementById("playerProgress");
+const playerTime = document.getElementById("playerTime");
+
+let noClicks = 0;
+let currentScene = "question";
+let toastTimer = null;
+
+const noMessages = [
+    "იქნები ჩემი გოგო? ♥",
+    "სცადე ისევ 😭",
+    "დარწმუნებული ხარ? 🥺",
+    "ნამდვილად...? 😭",
+    "ნუ მიკეთებ ამას...",
+    "კიდევ ერთი შანსი 🥹",
+    "კარგი... ბოლო შანსი ❤️"
+];
+
+function goToScene(name){
+    if(!scenes[name] || name === currentScene) return;
+    Object.values(scenes).forEach(scene => scene.classList.remove("active"));
+    requestAnimationFrame(() => scenes[name].classList.add("active"));
+    currentScene = name;
+    if(header) header.classList.toggle("hidden", name === "letter");
+}
+
+noButton.addEventListener("click", handleNo);
+
+function handleNo(){
+    noClicks++;
+    const index = Math.min(noClicks, noMessages.length - 1);
+    questionText.innerHTML = noMessages[index];
+    questionText.classList.remove("bump");
+    void questionText.offsetWidth;
+    questionText.classList.add("bump");
+
+    if(noClicks === 1){ yesButton.classList.add("growing"); yesButton.style.width = "145px"; yesButton.style.height = "62px"; }
+    if(noClicks === 2){ yesButton.style.width = "180px"; yesButton.style.height = "70px"; }
+    if(noClicks === 3){ yesButton.style.width = "220px"; yesButton.style.height = "78px"; }
+    if(noClicks === 4){ yesButton.style.width = "260px"; yesButton.style.height = "86px"; }
+    if(noClicks === 5){ yesButton.style.width = "300px"; yesButton.style.height = "96px"; }
+    if(noClicks >= 6){
+        yesButton.classList.add("huge");
+        noButton.classList.add("mini");
+        createParticles(24);
+        showToast("მხოლოდ ერთი სწორი პასუხია ❤️");
+    }
+}
+
+yesButton.addEventListener("click", accept);
+
+function accept(){
+    createParticles(45);
+    yesButton.disabled = true;
+    noButton.disabled = true;
+    setTimeout(() => {
+        goToScene("gifts");
+        yesButton.disabled = false;
+        noButton.disabled = false;
+    }, 450);
+}
+
+document.getElementById("gift1").addEventListener("click", () => { createParticles(18); goToScene("memories"); });
+document.getElementById("gift2").addEventListener("click", () => { createParticles(18); goToScene("music"); });
+document.getElementById("gift3").addEventListener("click", () => { createParticles(18); goToScene("letter"); });
+
+document.getElementById("memoryBack").addEventListener("click", () => goToScene("gifts"));
+document.getElementById("musicBack").addEventListener("click", () => goToScene("gifts"));
+document.getElementById("letterBack").addEventListener("click", () => goToScene("gifts"));
+
+playButton.addEventListener("click", toggleMusic);
+
+function toggleMusic(){
+    if(audio.paused){
+        audio.play().then(() => {
+            document.body.classList.add("music-playing");
+            playButton.textContent = "Ⅱ";
+        }).catch(() => {
+            showToast("დადეთ song.mp3 ფაილი index.html-ის გვერდით");
+        });
+    } else {
+        audio.pause();
+        document.body.classList.remove("music-playing");
+        playButton.textContent = "▶";
+    }
+}
+
+audio.addEventListener("timeupdate", () => {
+    if(!audio.duration) return;
+    const percent = (audio.currentTime / audio.duration) * 100;
+    playerProgress.style.width = `${percent}%`;
+    playerTime.textContent = formatTime(audio.currentTime);
+});
+
+audio.addEventListener("ended", () => {
+    document.body.classList.remove("music-playing");
+    playButton.textContent = "▶";
+    playerProgress.style.width = "0%";
+    playerTime.textContent = "0:00";
+});
+
+function formatTime(seconds){
+    const minutes = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60).toString().padStart(2, "0");
+    return `${minutes}:${secs}`;
+}
+
+function createParticles(amount){
+    const symbols = ["♥", "♡", "✦", "•"];
+    for(let i = 0; i < amount; i++){
+        const particle = document.createElement("div");
+        particle.className = "particle";
+        particle.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        const angle = Math.random() * Math.PI * 2;
+        const distance = 90 + Math.random() * 260;
+        const x = Math.cos(angle) * distance;
+        const y = Math.sin(angle) * distance;
+        const rotation = -180 + Math.random() * 360;
+        particle.style.setProperty("--x", `${x}px`);
+        particle.style.setProperty("--y", `${y}px`);
+        particle.style.setProperty("--r", `${rotation}deg`);
+        particle.style.fontSize = `${8 + Math.random()*13}px`;
+        particle.style.color = Math.random() > .45 ? "#B94B67" : "#2E2420";
+        document.body.appendChild(particle);
+        setTimeout(() => particle.remove(), 1400);
+    }
+}
+
+function showToast(message){
+    clearTimeout(toastTimer);
+    toast.textContent = message;
+    toast.classList.add("show");
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 2200);
+}
+
+let touchStartX = 0;
+let touchStartY = 0;
+
+document.addEventListener("touchstart", event => {
+    const touch = event.changedTouches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+}, { passive: true });
+
+document.addEventListener("touchend", event => {
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    if(Math.abs(dx) < 80 || Math.abs(dx) < Math.abs(dy)) return;
+    if(currentScene === "memories" || currentScene === "music" || currentScene === "letter"){
+        goToScene("gifts");
+    }
+}, { passive: true });
+
+document.addEventListener("keydown", event => {
+    if(event.key === "Enter" && currentScene === "question") accept();
+    if(event.key === "Escape" && currentScene !== "question") goToScene("gifts");
+});
+
+["memory1.jpg","memory2.jpg","memory3.jpg","memory4.jpg","memory5.jpg","memory6.jpg"].forEach(src => {
+    const image = new Image();
+    image.src = src;
+});
+
+document.body.classList.remove("music-playing");
+
+window.addEventListener("error", event => {
+    if(event.target && (event.target.tagName === "IMG" || event.target.tagName === "AUDIO")) return;
+}, true);
+
+</script>
+
+</body>
+</html>
